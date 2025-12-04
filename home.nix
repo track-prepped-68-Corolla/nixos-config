@@ -23,9 +23,9 @@
   home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
-     pkgs.hello
-     pkgs.mangohud
-     pkgs.vscodium
+     hello
+     mangohud
+     vscodium
      brave                       # Brave browser
      neovim                      # Neovim text editor
      kitty                       # Terminal emulator
@@ -36,7 +36,7 @@
      gitFull                     # is git!
      onlyoffice-desktopeditors   # office
      github-desktop
-         (pkgs.discord.override {
+     (pkgs.discord.override {
             withOpenASAR = true;
             enableAutoscroll = true;
             withMoonlight = true;
