@@ -32,6 +32,19 @@
     flavor = "mocha";
   };
 
+# Enable Catppuccin globally
+  catppuccin.enable = true; 
+
+# Set the desired flavor (mocha)
+  catppuccin.flavor = "mocha"; 
+
+# Set the accent color (mauve)
+  catppuccin.accent = "mauve"; 
+  
+# Enable the binary cache for faster builds
+  catppuccin.cache.enable = true;
+
+
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
