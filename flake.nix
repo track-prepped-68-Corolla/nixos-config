@@ -16,10 +16,11 @@ outputs = { self, nixpkgs, ... }@inputs:
 
     nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem{
         specialArgs = { inherit inputs; };
-#        { nix.settings.experimental-features = ["nix-command" "flakes"]; }
+
       modules = [
         ./configuration.nix
         inputs.home-manager.nixosModules.default
+        {nix.settings.experimental-features = ["nix-command" "flakes"];}
       ];
     };
 
