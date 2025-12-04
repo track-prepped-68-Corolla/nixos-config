@@ -20,11 +20,6 @@ outputs = { self, nixpkgs, ... }@inputs:
       modules = [
         ./configuration.nix
         inputs.home-manager.nixosModules.default
-        {
-           home.username = "joe";
-           home.homeDirectory = "/home/joe";
-           imports = [ ./home.nix ];
-        }
       ];
     };
 
