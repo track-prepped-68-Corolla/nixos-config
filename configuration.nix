@@ -11,7 +11,16 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = false;
+
+
+  boot.loader.grub = {
+  enable = true;
+  # Use 'nodev' for EFI systems to install GRUB to the EFI system partition (ESP)
+  device = "nodev";
+};
+
+  boot.loader.grub.efiSupport = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   catppuccin.grub = {
@@ -147,7 +156,7 @@
   environment.systemPackages = with pkgs; [
     wget                        # downlod
     ffmpeg                      # Media codecs
-     unzip                       # unzipper
+    unzip                       # unzipper
   ];
 
   home-manager = {
