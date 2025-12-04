@@ -15,13 +15,32 @@
   # release notes.
   home.stateVersion = "25.11"; # Please read the comment before changing.
 
+  nixpkgs.config.allowUnfree = true;
+
+  xdg.enable = true;
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
      pkgs.hello
      pkgs.mangohud
+     pkgs.vscodium
+     brave                       # Brave browser
+     neovim                      # Neovim text editor
+     kitty                       # Terminal emulator
+     krita                       # Replace GIMP with Krita
+     htop                        # System monitoring
+     lutris                      # Gaming platform
+     fastfetch                   # fastfetch
+     gitFull                     # is git!
+     onlyoffice-desktopeditors   # office
+     github-desktop
+         (pkgs.discord.override {
+            withOpenASAR = true;
+            enableAutoscroll = true;
+            withMoonlight = true;
+          })
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

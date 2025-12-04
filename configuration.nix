@@ -150,7 +150,6 @@
     gitFull                     # is git!
     onlyoffice-desktopeditors   # office
     unzip                       # unzipper
-    vscodium
     github-desktop
     (pkgs.discord.override {
             withOpenASAR = true;
