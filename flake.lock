@@ -81,6 +81,21 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1764884819,
+        "narHash": "sha256-eps0WhpeBAGOmSWvrjV4vNI072RTR4lDe+Kb4I/oHsY=",
+        "owner": "track-prepped-68-Corolla",
+        "repo": "nixos-hardware",
+        "rev": "aeabcdaf734aaba01c5bb3a5bf7da53a7a83880c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "track-prepped-68-Corolla",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1763966396,
@@ -118,6 +133,7 @@
         "catppuccin": "catppuccin",
         "home-manager": "home-manager",
         "jovian-nixos": "jovian-nixos",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2"
       }
     }
