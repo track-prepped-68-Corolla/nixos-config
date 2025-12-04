@@ -14,6 +14,15 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  catppuccin.grub = {
+    # This enables the theme module you provided in grub.nix (the lib.mkIf check)
+    enable = true;
+
+    # This sets the theme color, which the grub.nix file uses to build the path.
+    # The Catppuccin project defines the following flavors:
+    flavor = "mocha";
+  };
+
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
