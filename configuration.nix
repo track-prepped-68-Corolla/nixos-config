@@ -2,14 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, catppuccin, home-manager, inputs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.default
-
     ];
 
   # Bootloader.
@@ -139,23 +137,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     wget                        # downlod
-    brave                       # Brave browser
-    neovim                      # Neovim text editor
-    kitty                       # Terminal emulator
-    krita                       # Replace GIMP with Krita
     ffmpeg                      # Media codecs
-    htop                        # System monitoring
-    lutris                      # Gaming platform
-    fastfetch                   # fastfetch
-    gitFull                     # is git!
-    onlyoffice-desktopeditors   # office
-    unzip                       # unzipper
-    github-desktop
-    (pkgs.discord.override {
-            withOpenASAR = true;
-            enableAutoscroll = true;
-            withMoonlight = true;
-          })
+     unzip                       # unzipper
   ];
 
   home-manager = {
