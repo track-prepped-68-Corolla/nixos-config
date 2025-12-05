@@ -31,7 +31,7 @@ outputs = { self, nixpkgs, catppuccin, home-manager, jovian-nixos, nixos-hardwar
         inputs.home-manager.nixosModules.default
         jovian-nixos.nixosModules.default
         # PLACEHOLDER! DO NOT UNCOMMENT UNTIL YOU'VE POINTED THIS AT THE CORRECT SYSTEM!
-        #nixos-hardware.nixosModules.dell-xps-13-9380
+        nixos-hardware.nixosModules.asus-flow-gz301vu
         {nix.settings.experimental-features = ["nix-command" "flakes"];}
       ];
     };
