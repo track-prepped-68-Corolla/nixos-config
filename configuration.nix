@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, lib, catppuccin, home-manager, inputs, ... }:
 
 {
@@ -97,6 +93,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # BOOT OPTIMIZATION: Disables waiting for network to come online (removes 4.3s delay)
+  systemd.network.wait-online.enable = false;
+
   # Enable bluetooth
   hardware.bluetooth.enable = true;
 
@@ -135,16 +134,10 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable asus supergfxctl
-  services.supergfxd.enable = true;
+  # Enable asus supergfxctl (moved to nixos-hardware flake)
+#  services.supergfxd.enable = true;
 
-  # Enable asusctl
-  services = {
-    asusd = {
-      enable = true;
-      enableUserService = true;
-      };
-  };
+systemd.timers.fwupd-refresh.enable = false;
 
   security.pam.services.kwallet = {
   name = "kwallet";
