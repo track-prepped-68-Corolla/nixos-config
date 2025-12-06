@@ -202,6 +202,9 @@ systemd.timers.fwupd-refresh.enable = false;
     unzip                       # unzipper
   ];
 
+  fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+
+
   home-manager = {
   # also pass inputs to home-manager modules
   extraSpecialArgs = {inherit inputs;};
@@ -209,6 +212,7 @@ systemd.timers.fwupd-refresh.enable = false;
     "joe" = import ./home.nix;
   };
 };
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

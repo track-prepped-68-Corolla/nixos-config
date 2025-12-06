@@ -36,6 +36,7 @@
      gitFull                     # is git!
      onlyoffice-desktopeditors   # office
      github-desktop
+     oh-my-posh
      (pkgs.discord.override {
             withOpenASAR = true;
             enableAutoscroll = true;
