@@ -16,6 +16,28 @@
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
 
+  jovian.steam.enable = true;
+
+  jovian.steam.autoStart = true;
+
+  jovian.steam.user = "joe";
+
+  jovian.steam.desktopSession = "plasma";
+
+  virtualisation.docker.enable = true;
+
+  hardware.nvidia-container-toolkit.enable = true;
+
+  virtualisation.vmware.host.enable = true;
+
+  programs.virt-manager.enable = true;
+
+  users.groups.libvirtd.members = ["joe"];
+
+  virtualisation.libvirtd.enable = true;
+
+  virtualisation.spiceUSBRedirection.enable = true;
+
   hardware.nvidia = {
 
     # Modesetting is required.
@@ -122,7 +144,7 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
+  #services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
@@ -167,15 +189,15 @@ systemd.timers.fwupd-refresh.enable = false;
   users.users.joe = {
     isNormalUser = true;
     description = "Joe";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
     ];
   };
   # Enable automatic login for the user.
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "joe";
+  #services.displayManager.autoLogin.enable = true;
+  #services.displayManager.autoLogin.user = "joe";
 
   # Install firefox.
   programs.firefox.enable = true;
