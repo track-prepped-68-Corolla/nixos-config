@@ -17,6 +17,8 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  targets.genericLinux.enable = true;
+
   xdg.enable = true;
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -36,7 +38,9 @@
      gitFull                     # is git!
      onlyoffice-desktopeditors   # office
      github-desktop
+     nixfmt-rfc-style
      oh-my-posh
+     signal-desktop
      (pkgs.discord.override {
             withOpenASAR = true;
             enableAutoscroll = true;
