@@ -18,7 +18,7 @@
 
   jovian.steam.enable = true;
 
-  jovian.steam.autoStart = true;
+  jovian.steam.autoStart = false;
 
   jovian.steam.user = "joe";
 
@@ -101,7 +101,7 @@
 
 
   # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_6_17;
+  boot.kernelPackages = pkgs.linuxPackages_6_latest;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -144,7 +144,7 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  #services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
@@ -190,10 +190,6 @@ systemd.timers.fwupd-refresh.enable = false;
     isNormalUser = true;
     description = "Joe";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [
-      kdePackages.kate
-    #  thunderbird
-    ];
   };
   # Enable automatic login for the user.
   #services.displayManager.autoLogin.enable = true;
