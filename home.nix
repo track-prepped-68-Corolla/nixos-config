@@ -5,10 +5,16 @@
   # manage.
   home.username = "joe";
   home.homeDirectory = "/home/joe";
-  xdg.configFile."distrobox/distrobox.conf".text = ''
-    container_additional_volumes="/nix/store:/nix/store:ro /etc/profiles/per-user:/etc/profiles/per-user:ro /etc/static/profiles/per-user:/etc/static/profiles/per-user:ro"
-  '';
 
+
+  xdg.configFile."distrobox/distrobox.conf".text = ''
+    # Force Distrobox to use Docker instead of searching for Podman
+    container_manager="docker"
+
+    # Mount the Nix Store so your host's CLI tools work inside the container
+    container_additional_volumes="/nix/store:/nix/store:ro /etc/profiles/per-user:/etc/profiles/per-user:ro"
+  '';
+  
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
