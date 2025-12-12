@@ -38,6 +38,16 @@
 
   virtualisation.spiceUSBRedirection.enable = true;
 
+  # enable NFS client
+  services.nfs.client.enable = true;
+
+  # mount the export at /media/arr
+  #fileSystems."/media/arr" = {
+  #device = "10.0.0.113:/export/path"; # replace with your NAS export path
+  #fsType = "nfs";                      # or "nfs4"
+  #options = [ "rw" "hard" "_netdev" "vers=4" ]; # adjust options as needed
+  #};
+
   hardware.nvidia = {
 
     # Modesetting is required.
