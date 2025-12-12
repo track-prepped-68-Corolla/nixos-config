@@ -218,6 +218,7 @@ systemd.timers.fwupd-refresh.enable = false;
     wget                        # downlod
     ffmpeg                      # Media codecs
     unzip                       # unzipper
+	distrobox					# distrobox
   ];
 
   fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
