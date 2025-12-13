@@ -39,7 +39,7 @@
   virtualisation.spiceUSBRedirection.enable = true;
 
   # enable NFS client
-  services.nfs.client.enable = true;
+  #services.nfs.client.enable = true;
 
   # mount the export at /media/arr
   #fileSystems."/media/arr" = {
@@ -111,7 +111,7 @@
 
 
   # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_6_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_17;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
