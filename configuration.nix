@@ -38,6 +38,10 @@
 
   virtualisation.spiceUSBRedirection.enable = true;
 
+  virtualisation.incus.enable = true;
+
+  networking.nftables.enable = true;
+
   # enable NFS client
   #services.nfs.client.enable = true;
 
@@ -199,7 +203,7 @@ systemd.timers.fwupd-refresh.enable = false;
   users.users.joe = {
     isNormalUser = true;
     description = "Joe";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "incus-admin" ];
   };
   # Enable automatic login for the user.
   #services.displayManager.autoLogin.enable = true;
