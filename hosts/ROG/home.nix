@@ -50,6 +50,7 @@
      nixfmt-rfc-style
      oh-my-posh
      signal-desktop
+     slack
      (pkgs.discord.override {
             withOpenASAR = true;
             enableAutoscroll = true;
