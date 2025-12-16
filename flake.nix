@@ -27,7 +27,7 @@ outputs = { self, nixpkgs, catppuccin, home-manager, jovian-nixos, nixos-hardwar
       modules = [
         catppuccin.nixosModules.catppuccin
         home-manager.nixosModules.home-manager
-        ./configuration.nix
+        ./hosts/ROG
         inputs.home-manager.nixosModules.default
         jovian-nixos.nixosModules.default
         # PLACEHOLDER! DO NOT UNCOMMENT UNTIL YOU'VE POINTED THIS AT THE CORRECT SYSTEM!
