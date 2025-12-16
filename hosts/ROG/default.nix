@@ -242,7 +242,7 @@ systemd.timers.fwupd-refresh.enable = false;
   # also pass inputs to home-manager modules
   extraSpecialArgs = {inherit inputs;};
   users = {
-    "joe" = ./Joe.nix;
+    "joe" = ./../../Users/Joe.nix;
   };
 };
 
