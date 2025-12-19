@@ -36,7 +36,7 @@
         rog = nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
           modules = sharedModules ++ [
-            ./hosts/ROG
+            ./hosts/rog
             nixos-hardware.nixosModules.asus-flow-gz301vu
           ];
         };
