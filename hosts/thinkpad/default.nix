@@ -239,7 +239,6 @@ systemd.timers.fwupd-refresh.enable = false;
 	libva-utils
     vdpauinfo
     vulkan-tools
-    amdvlk
   ];
 
   fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
