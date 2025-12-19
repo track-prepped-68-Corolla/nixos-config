@@ -5,7 +5,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./../../modules/services/sddm.nix
-      ./../../modules/desktop/plasma.nix
+      ./../../modules/desktops/plasma.nix
     ];
 
   # Bootloader.
