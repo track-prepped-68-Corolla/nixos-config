@@ -45,7 +45,8 @@
         host2 = nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
           modules = sharedModules ++ [
-            ./hosts/host2
+            ./hosts/thinkpad
+            nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
           ];
         };
         

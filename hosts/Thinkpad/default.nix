@@ -11,7 +11,10 @@
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
   };
+
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Load nvidia driver for Xorg and Wayland
  # services.xserver.videoDrivers = ["nvidia"];
@@ -81,7 +84,7 @@
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
 #    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
+#  };
 
   boot.loader.grub = {
   enable = true;
@@ -221,7 +224,7 @@ systemd.timers.fwupd-refresh.enable = false;
 #  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
 #  localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
 #  gamescopeSession.enable = false;
-};
+#};
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -233,6 +236,10 @@ systemd.timers.fwupd-refresh.enable = false;
     ffmpeg                      # Media codecs
     unzip                       # unzipper
 	distrobox					# distrobox
+	libva-utils
+    vdpauinfo
+    vulkan-tools
+    amdvlk
   ];
 
   fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
