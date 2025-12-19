@@ -33,7 +33,7 @@
       nixosConfigurations = {
         
         # Changed back to ROG
-        ROG = nixpkgs.lib.nixosSystem {
+        rog = nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
           modules = sharedModules ++ [
             ./hosts/ROG

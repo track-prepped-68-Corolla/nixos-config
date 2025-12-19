@@ -117,7 +117,7 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_6_17;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "rog"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
