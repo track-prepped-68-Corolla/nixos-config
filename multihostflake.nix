@@ -19,10 +19,8 @@
 
   outputs = { self, nixpkgs, catppuccin, home-manager, jovian-nixos, nixos-hardware, ... }@inputs:
     let
-      # Define shared specialArgs to keep the config clean
       sharedArgs = { inherit inputs catppuccin home-manager jovian-nixos nixos-hardware; };
       
-      # Define shared modules that apply to both hosts
       sharedModules = [
         catppuccin.nixosModules.catppuccin
         home-manager.nixosModules.home-manager
@@ -34,21 +32,20 @@
     {
       nixosConfigurations = {
         
-        # Configuration for host1
-        host1 = nixpkgs.lib.nixosSystem {
+        # Changed back to ROG
+        ROG = nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
           modules = sharedModules ++ [
-            ./hosts/host1 # Path to host1 specific config
+            ./hosts/ROG
             nixos-hardware.nixosModules.asus-flow-gz301vu
           ];
         };
 
-        # Configuration for host2
+        # Second host
         host2 = nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
           modules = sharedModules ++ [
-            ./hosts/host2 # Path to host2 specific config
-            # Add any host2-specific hardware modules here
+            ./hosts/host2
           ];
         };
         
