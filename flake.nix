@@ -42,7 +42,7 @@
         };
 
         # Second host
-        host2 = nixpkgs.lib.nixosSystem {
+        thinkpad = nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
           modules = sharedModules ++ [
             ./hosts/thinkpad
