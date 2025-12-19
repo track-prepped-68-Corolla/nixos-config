@@ -14,31 +14,31 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+ # services.xserver.videoDrivers = ["nvidia"];
 
-  jovian.steam.enable = true;
+ # jovian.steam.enable = true;
 
-  jovian.steam.autoStart = false;
+ # jovian.steam.autoStart = false;
 
-  jovian.steam.user = "joe";
+#  jovian.steam.user = "joe";
 
-  jovian.steam.desktopSession = "plasma";
+#  jovian.steam.desktopSession = "plasma";
 
-  virtualisation.docker.enable = true;
+#  virtualisation.docker.enable = true;
 
-  hardware.nvidia-container-toolkit.enable = true;
+#  hardware.nvidia-container-toolkit.enable = true;
 
-  virtualisation.vmware.host.enable = true;
+#  virtualisation.vmware.host.enable = true;
 
-  programs.virt-manager.enable = true;
+#  programs.virt-manager.enable = true;
 
-  users.groups.libvirtd.members = ["joe"];
+#  users.groups.libvirtd.members = ["joe"];
 
-  virtualisation.libvirtd.enable = true;
+#  virtualisation.libvirtd.enable = true;
 
-  virtualisation.spiceUSBRedirection.enable = true;
+#  virtualisation.spiceUSBRedirection.enable = true;
 
-  virtualisation.incus.enable = true;
+#  virtualisation.incus.enable = true;
 
   networking.nftables.enable = true;
 
@@ -52,20 +52,20 @@
   #options = [ "rw" "hard" "_netdev" "vers=4" ]; # adjust options as needed
   #};
 
-  hardware.nvidia = {
+#  hardware.nvidia = {
 
     # Modesetting is required.
-    modesetting.enable = true;
+#    modesetting.enable = true;
 
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
     # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
     # of just the bare essentials.
-    powerManagement.enable = true;
+#    powerManagement.enable = true;
 
     # Fine-grained power management. Turns off GPU when not in use.
     # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = true;
+#    powerManagement.finegrained = true;
 
     # Use the NVidia open source kernel module (not to be confused with the
     # independent third-party "nouveau" open source driver).
@@ -73,14 +73,14 @@
     # supported GPUs is at:
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
-    open = true;
+#    open = true;
 
     # Enable the Nvidia settings menu,
 	# accessible via `nvidia-settings`.
-    nvidiaSettings = true;
+#    nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+#    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   boot.loader.grub = {
@@ -117,7 +117,7 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_6_17;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "thinkpad"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -200,10 +200,10 @@ systemd.timers.fwupd-refresh.enable = false;
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.joe = {
+  users.users.jen = {
     isNormalUser = true;
-    description = "Joe";
-    extraGroups = [ "networkmanager" "wheel" "docker" "incus-admin" ];
+    description = "Jen";
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
   };
   # Enable automatic login for the user.
   #services.displayManager.autoLogin.enable = true;
@@ -215,12 +215,12 @@ systemd.timers.fwupd-refresh.enable = false;
   # install kde connect
   programs.kdeconnect.enable = true;
 
-  programs.steam = {
-  enable = true;
-  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  gamescopeSession.enable = false;
+#  programs.steam = {
+#  enable = true;
+#  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+#  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+#  localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+#  gamescopeSession.enable = false;
 };
 
   # Allow unfree packages
@@ -242,7 +242,7 @@ systemd.timers.fwupd-refresh.enable = false;
   # also pass inputs to home-manager modules
   extraSpecialArgs = {inherit inputs;};
   users = {
-    "joe" = import ./home.nix;
+    "jen" = import ./../../Users/Jen.nix;
   };
 };
 
