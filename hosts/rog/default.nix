@@ -23,6 +23,10 @@
     # It is safe to also explicitly define this here just in case
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
+    nixpkgs.config.allowUnfree = true;
+
+    networking.networkmanager.enable = true;
+
     networking.hostName = "rog";
 
     boot.loader.grub = {
@@ -42,7 +46,7 @@
 
     home-manager = {
       extraSpecialArgs = { inherit inputs; };
-      users.${config.mainUser} = ./../../Users + "/${config.mainUser}.nix";
+      users.${config.mainUser} = ./../../Users + "/${config.mainUser}";
     };
 
     system.stateVersion = "25.05";
