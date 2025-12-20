@@ -6,10 +6,34 @@ A structured, flakes-based NixOS configuration featuring a modular approach to h
 
 ```text
 .
-├── hosts        # Machine-specific configurations
-├── modules      # Reusable logic (Desktop, Services, Hardware)
-├── users        # User-specific home-manager/system configs
-└── flake.nix    # Entry point for the configuration
+├── flake.lock
+├── flake.nix
+├── hosts
+│   ├── rog
+│   │   ├── default.nix
+│   │   └── hardware-configuration.nix
+│   └── thinkpad
+│       ├── default.nix
+│       └── hardware-configuration.nix
+├── modules
+│   ├── desktops
+│   │   └── plasma.nix
+│   ├── hardware
+│   │   ├── nvidia/
+│   │   └── nvidia.nix
+│   ├── profiles
+│   │   └── gaming.nix
+│   ├── services
+│   │   └── sddm.nix
+│   ├── system
+│   │   └── virt.nix
+│   └── themes
+│       └── catppuccin.nix
+└── users
+    ├── jen
+    │   └── default.nix
+    └── joe
+        └── default.nix
 
 ```
 
