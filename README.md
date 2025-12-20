@@ -1,10 +1,3 @@
-To make a README look "right" on GitHub, we should use clear headers, **emojis** for visual cues, **code blocks** with syntax highlighting, and a **directory tree** for quick navigation.
-
-Here is the updated Markdown code optimized for GitHub's rendering engine:
-
----
-
-```markdown
 # ❄️ Modular NixOS Configuration
 
 A structured, flakes-based NixOS configuration featuring a modular approach to hardware, services, and user environments.
@@ -90,12 +83,6 @@ sudo nix-collect-garbage -d
 ```
 
 ---
-
-### Why this works on GitHub:
-1.  **Gfm (GitHub Flavored Markdown) Tables:** These render beautifully on mobile and desktop.
-2.  **Code Blocks:** Using `text` for the tree and `bash` for commands ensures the colors look correct.
-3.  **Alerts:** I used the `> [!TIP]` syntax, which GitHub renders as a specially colored callout box.
-4.  **Horizontal Rules (`---`):** This breaks up the "wall of text" feeling.
 
 Would you like me to generate the **`flake.nix`** file that matches this specific directory structure?
 
