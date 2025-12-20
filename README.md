@@ -79,11 +79,6 @@ sudo nix-collect-garbage -d
 
 > [!TIP]
 > When adding new hardware, always remember to copy your `hardware-configuration.nix` from `/etc/nixos/` into the respective `hosts/<name>` directory.
-
-```
-
----
-
 Would you like me to generate the **`flake.nix`** file that matches this specific directory structure?
 
 ```
