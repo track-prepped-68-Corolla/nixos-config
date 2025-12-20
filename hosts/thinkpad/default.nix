@@ -1,47 +1,52 @@
 { config, pkgs, lib, catppuccin, home-manager, inputs, ... }:
 
 {
-  # --- THE VARIABLE ---
-  # Just change "joe" to "jen" here.
-  # Everything else in the file will update automatically.
+  # 1. Imports MUST be at the top level, outside of 'config'
+  imports = [
+    ./hardware-configuration.nix
+    ./../../modules/services/sddm.nix
+    ./../../modules/desktops/plasma.nix
+    #./../../modules/hardware/nvidia.nix
+    #./../../modules/system/virt.nix
+    #./../../modules/profiles/gaming.nix
+    #./../../modules/themes/catppuccin.nix
+  ];
+
+  # 2. Options (Defining the variable)
   options.mainUser = lib.mkOption {
     type = lib.types.str;
     default = "jen";
   };
 
+  # 3. Config (Setting the actual values)
   config = {
-    imports = [
-      ./hardware-configuration.nix
-      ./../../modules/services/sddm.nix
-      ./../../modules/desktops/plasma.nix
-      # Only include what the Thinkpad actually has (e.g., maybe no Nvidia?)
-      #./../../modules/system/virt.nix
-      #./../../modules/themes/catppuccin.nix
-    ];
-
-    # --- HOST IDENTITY ---
-    networking.hostName = "thinkpad";
+    # It is safe to also explicitly define this here just in case
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
     nixpkgs.config.allowUnfree = true;
 
-    # --- THE REST IS IDENTICAL ---
-    # Because we use ${config.mainUser}, these blocks work for Joe OR Jen.
+    networking.networkmanager.enable = true;
+
+    networking.hostName = "thinkpad";
+
+    boot.loader.grub = {
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+    };
+    boot.loader.efi.canTouchEfiVariables = true;
+    boot.kernelPackages = pkgs.linuxPackages_6_17;
+
+    # ... Include the rest of your settings (Networking, Users, etc.) here ...
+
     users.users.${config.mainUser} = {
       isNormalUser = true;
-      description = "Primary User Account";
       extraGroups = [ "networkmanager" "wheel" "docker" ];
     };
 
     home-manager = {
       extraSpecialArgs = { inherit inputs; };
-      users.${config.mainUser} = ./../../Users + "/${config.mainUser}";
-    };
-
-    # Standard system stuff...
-    boot.loader.grub = {
-      enable = true;
-      device = "nodev";
-      efiSupport = true;
+      users.${config.mainUser} = ./../../users + "/${config.mainUser}";
     };
 
     system.stateVersion = "25.05";
