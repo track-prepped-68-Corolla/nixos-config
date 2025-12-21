@@ -9,7 +9,7 @@
     ./../../modules/hardware/nvidia.nix
     ./../../modules/system/virt.nix
     ./../../modules/system/podman.nix
-    ./../../modules/profiles/gaming.nix
+    #./../../modules/profiles/gaming.nix
     ./../../modules/themes/catppuccin.nix
   ];
 

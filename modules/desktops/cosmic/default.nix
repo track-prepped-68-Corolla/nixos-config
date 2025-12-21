@@ -27,5 +27,6 @@
 
     # Ensure your kernel handles Wayland/Nvidia correctly if applicable
      boot.kernelParams = [ "nvidia_drm.fbdev=1" ];
+     hardware.graphics.enable = true;
   };
 }
