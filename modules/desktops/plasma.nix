@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Enable the X11 windowing system.
@@ -9,15 +9,9 @@
 
   programs.kdeconnect.enable = true;
 
-  security.rtkit.enable = true;
-
-  xdg.portal = {
-  enable = true;
-  extraPortals = [
-    pkgs.xdg-desktop-portal-gtk
-    pkgs.kdePackages.xdg-desktop-portal-kde
-];
-  config.common.default = "kde"; # This forces a default fallback
+  environment.sessionVariables = {
+  KSCREEN_BACKEND = "none";
+  KSCREEN_BACKEND_INPROCESS = "1";
 };
 
 
@@ -34,6 +28,13 @@
     name = "kwallet";
     enableKwallet = true;
   };
+
+xdg.portal = {
+  enable = true;
+  # Force KDE to be the ONLY portal provider to stop the conflict
+  extraPortals = lib.mkForce [ pkgs.kdePackages.xdg-desktop-portal-kde ];
+  config.common.default = "kde";
+};
 
   # Optional: Exclude some default KDE bloat
   environment.plasma6.excludePackages = with pkgs.kdePackages; [

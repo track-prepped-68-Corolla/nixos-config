@@ -24,6 +24,14 @@
     # It is safe to also explicitly define this here just in case
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
+    boot.initrd.kernelModules = [
+    "i915"
+    "nvidia"
+    "nvidia_modeset"
+    "nvidia_uvm"
+    "nvidia_drm"
+    ];
+
     nixpkgs.config.allowUnfree = true;
 
     networking.networkmanager.enable = true;
