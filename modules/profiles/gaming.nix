@@ -6,7 +6,7 @@
     enable = true;
     autoStart = false;
     user = config.mainUser;
-    desktopSession = "plasma";
+    desktopSession = "cosmic";
   };
 
   # Standard Steam Client

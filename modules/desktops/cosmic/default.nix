@@ -26,6 +26,6 @@
     services.system76-scheduler.enable = true;
 
     # Ensure your kernel handles Wayland/Nvidia correctly if applicable
-    # boot.kernelParams = [ "nvidia_drm.fbdev=1" ];
+     boot.kernelParams = [ "nvidia_drm.fbdev=1" ];
   };
 }
