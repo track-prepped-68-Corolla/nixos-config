@@ -9,7 +9,6 @@
 
   xdg.configFile."distrobox/distrobox.conf".text = ''
     # Force Distrobox to use Docker instead of searching for Podman
-    container_manager="docker"
 
     # Mount the Nix Store so your host's CLI tools work inside the container
     container_additional_volumes="/nix/store:/nix/store:ro /etc/profiles/per-user:/etc/profiles/per-user:ro"
@@ -34,28 +33,14 @@
   home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
-     hello
-     mangohud
-     vscodium
+     firefox
+     krita
+     vlc
      brave                       # Brave browser
-     neovim                      # Neovim text editor
      kitty                       # Terminal emulator
-     krita                       # Replace GIMP with Krita
-     htop                        # System monitoring
-     lutris                      # Gaming platform
-     fastfetch                   # fastfetch
-     gitFull                     # is git!
      onlyoffice-desktopeditors   # office
-     github-desktop
-     nixfmt-rfc-style
-     oh-my-posh
      signal-desktop
-     slack
-     (pkgs.discord.override {
-            withOpenASAR = true;
-            enableAutoscroll = true;
-            withMoonlight = true;
-          })
+
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

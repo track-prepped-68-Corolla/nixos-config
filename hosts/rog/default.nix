@@ -8,6 +8,7 @@
     ./../../modules/desktops/plasma.nix
     ./../../modules/hardware/nvidia.nix
     ./../../modules/system/virt.nix
+    ./../../modules/system/podman.nix
     ./../../modules/profiles/gaming.nix
     ./../../modules/themes/catppuccin.nix
   ];
@@ -34,6 +35,11 @@
       device = "nodev";
       efiSupport = true;
     };
+
+    services = {
+      supergfxd.enable = false;
+};
+
     boot.loader.efi.canTouchEfiVariables = true;
     boot.kernelPackages = pkgs.linuxPackages_6_17;
 

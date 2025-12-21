@@ -7,6 +7,18 @@
   # Enable the KDE Plasma Desktop Environment.
   services.desktopManager.plasma6.enable = true;
 
+  programs.kdeconnect.enable = true;
+
+  xdg.portal = {
+  enable = true;
+  extraPortals = [
+    pkgs.xdg-desktop-portal-gtk
+    pkgs.kdePackages.xdg-desktop-portal-kde
+];
+  config.common.default = "kde"; # This forces a default fallback
+};
+
+
   # KDE-specific system packages
   environment.systemPackages = with pkgs; [
     kdePackages.kate

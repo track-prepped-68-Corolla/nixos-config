@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  virtualisation.docker.enable = true;
   virtualisation.vmware.host.enable = true;
   virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;

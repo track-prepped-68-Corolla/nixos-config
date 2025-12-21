@@ -6,10 +6,11 @@
     ./hardware-configuration.nix
     ./../../modules/services/sddm.nix
     ./../../modules/desktops/plasma.nix
+    ./../../modules/system/podman.nix
     #./../../modules/hardware/nvidia.nix
     #./../../modules/system/virt.nix
     #./../../modules/profiles/gaming.nix
-    #./../../modules/themes/catppuccin.nix
+    ./../../modules/themes/catppuccin.nix
   ];
 
   # 2. Options (Defining the variable)
