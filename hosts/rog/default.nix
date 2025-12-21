@@ -38,7 +38,6 @@
 
     services = {
       supergfxd.enable = false;
-      dbus.implementation = "broker";
 };
 
     boot.loader.efi.canTouchEfiVariables = true;

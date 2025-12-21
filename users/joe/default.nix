@@ -24,7 +24,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  #targets.genericLinux.enable = true;
+  targets.genericLinux.enable = true;
 
   xdg.enable = true;
   # The home.packages option allows you to install Nix packages into your
