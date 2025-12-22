@@ -1,0 +1,1 @@
+declare core apps here
