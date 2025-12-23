@@ -4,15 +4,12 @@
   # 1. Imports MUST be at the top level, outside of 'config'
   imports = [
     ./hardware-configuration.nix
-    ./../../modules/services/sddm.nix
-    ./../../modules/services/printing
-    ./../../modules/desktops/plasma.nix
-    ./../../modules/hardware/nvidia.nix
-    ./../../modules/system/virt.nix
-    ./../../modules/system/podman.nix
-    ./../../modules/profiles/gaming.nix
-    ./../../modules/themes/catppuccin.nix
+    ./../../modules/
   ];
+
+  modules = {
+    podman.enable = true;
+  };
 
   # 2. Options (Defining the variable)
   options.mainUser = lib.mkOption {

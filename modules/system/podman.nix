@@ -1,11 +1,11 @@
 { pkgs, lib, config, ... }:
 
 {
-  options.mySystem.podman = {
+  options.modules.podman = {
     enable = lib.mkEnableOption "Enable Podman with NVIDIA support";
   };
 
-  config = lib.mkIf config.mySystem.podman.enable {
+  config = lib.mkIf config.modules.podman.enable {
     
     # 1. Core Engine
     virtualisation.podman = {
