@@ -100,7 +100,7 @@
       # Admin + SuperUsers + NormalUsers
       users = lib.genAttrs 
         ([ "admin" ] ++ config.host.superUsers ++ config.host.normalUsers)
-        (user: ./../../users + "/${user}"); # [span_7](start_span)Preserves your path logic[span_7](end_span)
+        (user: ./../../home/users + "/${user}"); # [span_7](start_span)Preserves your path logic[span_7](end_span)
     };
   };
 }

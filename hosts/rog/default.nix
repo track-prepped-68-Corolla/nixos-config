@@ -5,6 +5,7 @@
   imports = [
     ./hardware-configuration.nix
     ./../../modules/services/sddm.nix
+    ./../../modules/services/printing
     ./../../modules/desktops/plasma.nix
     ./../../modules/hardware/nvidia.nix
     ./../../modules/system/virt.nix
@@ -41,18 +42,18 @@
 };
 
     boot.loader.efi.canTouchEfiVariables = true;
-    boot.kernelPackages = pkgs.linuxPackages_6_17;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
 
     # ... Include the rest of your settings (Networking, Users, etc.) here ...
 
     users.users.${config.mainUser} = {
       isNormalUser = true;
-      extraGroups = [ "networkmanager" "wheel" "docker" "incus-admin" ];
+      extraGroups = [ "networkmanager" "wheel" "docker" "incus-admin" "lp" "scanner" "printadmin" ];
     };
 
     home-manager = {
       extraSpecialArgs = { inherit inputs; };
-      users.${config.mainUser} = ./../../users + "/${config.mainUser}";
+      users.${config.mainUser} = ./../../home/users + "/${config.mainUser}";
     };
 
     system.stateVersion = "25.05";

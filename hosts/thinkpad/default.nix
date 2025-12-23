@@ -47,7 +47,7 @@
 
     home-manager = {
       extraSpecialArgs = { inherit inputs; };
-      users.${config.mainUser} = ./../../users + "/${config.mainUser}";
+      users.${config.mainUser} = ./../../home/users + "/${config.mainUser}";
     };
 
     system.stateVersion = "25.05";
