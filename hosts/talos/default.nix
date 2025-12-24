@@ -24,6 +24,9 @@
     default = "joe";
   };
 
+  boot.initrd.kernelModules = [ "amdgpu" ];
+
+
   # 3. Config (Setting the actual values)
   config = {
     # It is safe to also explicitly define this here just in case
