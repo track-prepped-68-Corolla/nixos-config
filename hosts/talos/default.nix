@@ -30,6 +30,15 @@
     # It is safe to also explicitly define this here just in case
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
+    # 1. Install the Tailscale package
+    environment.systemPackages = [ pkgs.tailscale ];
+
+    # 2. Enable the Tailscale daemon
+    services.tailscale.enable = true;
+
+    # 3. Open the firewall for Tailscale's default port
+    networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+
     nixpkgs.config.allowUnfree = true;
 
     networking.networkmanager.enable = true;
