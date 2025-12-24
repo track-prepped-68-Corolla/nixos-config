@@ -14,17 +14,6 @@
     ./../../modules/themes/catppuccin.nix
   ];
 
-hardware.enableAllFirmware = true;
-
-
-hardware.bluetooth.settings = {
-  General = {
-    ControllerMode = "dual"; # Supports both classic and Low Energy
-    Experimental = true;    # Often required for newer Xbox firmware
-  };
-};
-
-
 #  modules = {
 #    podman.enable = true;
 #  };
@@ -48,6 +37,18 @@ hardware.bluetooth.settings = {
     networking.hostName = "talos";
 
     boot.initrd.kernelModules = [ "amdgpu" ];
+
+   hardware.enableAllFirmware = true;
+
+
+hardware.bluetooth.settings = {
+  General = {
+    ControllerMode = "dual"; # Supports both classic and Low Energy
+    Experimental = true;    # Often required for newer Xbox firmware
+  };
+};
+
+hardware.bluetooth.enable = true
 
     boot.loader.grub = {
       enable = true;
