@@ -24,8 +24,6 @@
     default = "joe";
   };
 
-  boot.initrd.kernelModules = [ "amdgpu" ];
-
 
   # 3. Config (Setting the actual values)
   config = {
@@ -37,6 +35,8 @@
     networking.networkmanager.enable = true;
 
     networking.hostName = "talos";
+
+    boot.initrd.kernelModules = [ "amdgpu" ];
 
     boot.loader.grub = {
       enable = true;
