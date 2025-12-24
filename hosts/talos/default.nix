@@ -14,10 +14,6 @@
     ./../../modules/themes/catppuccin.nix
   ];
 
-#  modules = {
-#    podman.enable = true;
-#  };
-
   # 2. Options (Defining the variable)
   options.mainUser = lib.mkOption {
     type = lib.types.str;
@@ -29,6 +25,10 @@
   config = {
     # It is safe to also explicitly define this here just in case
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
+    modules = {
+      podman.enable = true;
+    };
 
     # 1. Install the Tailscale package
     environment.systemPackages = [ pkgs.tailscale ];
