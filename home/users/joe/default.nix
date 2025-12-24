@@ -35,6 +35,8 @@
      hello
      micro
      yazi
+     localsend
+     trayscale
      mangohud
      vscodium
      brave                       # Brave browser
