@@ -14,9 +14,9 @@
     ./../../modules/themes/catppuccin.nix
   ];
 
-  modules = {
-    podman.enable = true;
-  };
+#  modules = {
+#    podman.enable = true;
+#  };
 
   # 2. Options (Defining the variable)
   options.mainUser = lib.mkOption {
