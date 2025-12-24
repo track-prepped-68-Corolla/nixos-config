@@ -33,17 +33,13 @@
 
     networking.networkmanager.enable = true;
 
-    networking.hostName = "rog";
+    networking.hostName = "talos";
 
     boot.loader.grub = {
       enable = true;
       device = "nodev";
       efiSupport = true;
     };
-
-    services = {
-      supergfxd.enable = false;
-};
 
     boot.loader.efi.canTouchEfiVariables = true;
     boot.kernelPackages = pkgs.linuxPackages_latest;
