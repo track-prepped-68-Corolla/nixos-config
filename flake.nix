@@ -49,6 +49,15 @@
             nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
           ];
         };
+
+        # third host
+        talos = nixpkgs.lib.nixosSystem {
+          specialArgs = sharedArgs;
+          modules = sharedModules ++ [
+            ./hosts/talos
+
+          ];
+        };
         
       };
     };
