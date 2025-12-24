@@ -1,18 +1,19 @@
-{ config, pkgs, ... }:
+# /etc/nixos/nvidia-3090.nix
+{ config, pkgs, lib, ... }:
 
 {
-  # 1. Enable Graphics Support (modern replacement for hardware.opengl)
+  # Use hardware.graphics for modern NixOS (24.11+)
+  # If on an older version, this might need to be hardware.opengl
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
 
-  # 2. Load the NVIDIA driver
+  # Load the nvidia driver
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
-    # Use the NVidia open source kernel module (not nouveau)
-    # Supported on Turing (RTX 20-series) and newer.
+    # Use the NVidia open source kernel module
     open = true;
 
     # Enable the Nvidia settings menu
@@ -25,10 +26,12 @@
     prime = {
       offload = {
         enable = true;
-        enableOffloadCmd = true; # Provides the `nvidia-offload` helper script
+        enableOffloadCmd = true;
       };
 
-      # Your converted Decimal Bus IDs
+      # Converted Decimal Bus IDs for your hardware
+      # AMD: 23:00.0 -> 35:0:0
+      # NVIDIA: 2d:00.0 -> 45:0:0
       amdgpuBusId = "PCI:35:0:0";
       nvidiaBusId = "PCI:45:0:0";
     };
