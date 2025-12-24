@@ -5,7 +5,7 @@
   jovian.steam = {
     enable = true;
     autoStart = true;
-    user = config.mainUser;
+    user = config.mainuser;
     desktopSession = "plasma";
   };
 
