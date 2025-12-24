@@ -15,7 +15,7 @@
   ];
 
   # 2. Options (Defining the variable)
-  options.mainUser = lib.mkOption {
+  options.mainuser = lib.mkOption {
     type = lib.types.str;
     default = "joe";
   };
@@ -62,14 +62,14 @@
 
     # ... Include the rest of your settings (Networking, Users, etc.) here ...
 
-    users.users.${config.mainUser} = {
+    users.users.${config.mainuser} = {
       isNormalUser = true;
       extraGroups = [ "networkmanager" "wheel" "docker" "incus-admin" "lp" "scanner" "printadmin" ];
     };
 
     home-manager = {
       extraSpecialArgs = { inherit inputs; };
-      users.${config.mainUser} = ./../../home/users + "/${config.mainUser}";
+      users.${config.mainuser} = ./../../home/users + "/${config.mainuser}";
     };
 
     system.stateVersion = "25.05";
