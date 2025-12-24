@@ -14,6 +14,17 @@
     ./../../modules/themes/catppuccin.nix
   ];
 
+hardware.enableAllFirmware = true;
+
+
+hardware.bluetooth.settings = {
+  General = {
+    ControllerMode = "dual"; # Supports both classic and Low Energy
+    Experimental = true;    # Often required for newer Xbox firmware
+  };
+};
+
+
 #  modules = {
 #    podman.enable = true;
 #  };
