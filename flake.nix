@@ -4,8 +4,23 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    plasma-manager.url = "github:nix-community/plasma-manager";
+    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.inputs.home-manager.follows = "home-manager";
+
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+
+    impermanence.url = "github:nix-community/impermanence";
+
+
     catppuccin.url = "github:catppuccin/nix";
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
+
+    stylix.url = "github:nix-community/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     jovian-nixos.url = "github:jovian-experiments/jovian-nixos";
 
@@ -17,15 +32,28 @@
     };
   };
 
-  outputs = { self, nixpkgs, catppuccin, home-manager, jovian-nixos, nixos-hardware, ... }@inputs:
+  outputs = { self, nixpkgs, catppuccin, stylix, home-manager, plasma-manager, sops-nix, impermanence, nixos-cosmic, jovian-nixos, nixos-hardware, ... }@inputs:
     let
       sharedArgs = { inherit inputs catppuccin home-manager jovian-nixos nixos-hardware; };
       
       sharedModules = [
+        #inputs.plasma-manager.homeModules.plasma-manager
         catppuccin.nixosModules.catppuccin
+        {
+            nix.settings = {
+              substituters = [ "https://cosmic.cachix.org/" ];
+              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+            };
+          }
+          nixos-cosmic.nixosModules.default
         home-manager.nixosModules.home-manager
+         {
+            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+          }
         inputs.home-manager.nixosModules.default
+        stylix.nixosModules.stylix
         jovian-nixos.nixosModules.default
+        sops-nix.nixosModules.sops
         { nix.settings.experimental-features = [ "nix-command" "flakes" ]; }
       ];
     in
