@@ -36,6 +36,9 @@
     # 2. Enable the Tailscale daemon
     services.tailscale.enable = true;
 
+    services.openssh.enable = true;
+
+
     # 3. Open the firewall for Tailscale's default port
     networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
 
