@@ -38,6 +38,11 @@
 
     services.openssh.enable = true;
 
+    services.desktopManager.plasma6.enable = true;
+    # Open the RDP port in the firewall
+    networking.firewall.allowedTCPPorts = [ 3389 ];
+
+    environment.systemPackages = [ pkgs.kdePackages.krdc ];
 
     # 3. Open the firewall for Tailscale's default port
     networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
