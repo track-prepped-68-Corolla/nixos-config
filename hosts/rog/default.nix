@@ -49,7 +49,13 @@
 
     services = {
       supergfxd.enable = false;
-};
+    };
+
+    services.desktopManager.plasma6.enable = true;
+    # Open the RDP port in the firewall
+    networking.firewall.allowedTCPPorts = [ 3389 ];
+
+    environment.systemPackages = [ pkgs.kdePackages.krdc ];
 
     boot.loader.efi.canTouchEfiVariables = true;
     boot.kernelPackages = pkgs.linuxPackages_latest;
