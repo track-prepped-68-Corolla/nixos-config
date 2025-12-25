@@ -1,7 +1,7 @@
-create app modules
+[x] create app modules
 
-start configuring home manager by capturing dotfiles and creating a module structure
+[] start configuring home manager by capturing dotfiles and creating a module structure
 
-install nixos-generators, disko, sops-nix, impermanence, plasma-manager, cosmic, and stylix flakes 
+[] install nixos-generators, disko, sops-nix, impermanence, plasma-manager, cosmic, and stylix flakes 
 
-modify user logic to add hardcoded admin and arbitrary list of restricted and wheel users
+[x] modify user logic to add hardcoded admin and arbitrary list of restricted and wheel users
