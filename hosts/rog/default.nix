@@ -17,7 +17,10 @@
   config = {
 
   # 1. Install the Tailscale package
-  environment.systemPackages = [ pkgs.tailscale ];
+  environment.systemPackages = [ 
+  pkgs.tailscale 
+  pkgs.kdePackages.krdc
+  ];
 
   # 2. Enable the Tailscale daemon
   services.tailscale.enable = true;
@@ -54,8 +57,6 @@
     services.desktopManager.plasma6.enable = true;
     # Open the RDP port in the firewall
     networking.firewall.allowedTCPPorts = [ 3389 ];
-
-    environment.systemPackages = [ pkgs.kdePackages.krdc ];
 
     boot.loader.efi.canTouchEfiVariables = true;
     boot.kernelPackages = pkgs.linuxPackages_latest;
