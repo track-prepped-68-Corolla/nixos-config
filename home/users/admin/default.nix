@@ -3,8 +3,8 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "joe";
-  home.homeDirectory = "/home/joe";
+  home.username = "admin";
+  home.homeDirectory = "/home/admin";
 
 
   xdg.configFile."distrobox/distrobox.conf".text = ''

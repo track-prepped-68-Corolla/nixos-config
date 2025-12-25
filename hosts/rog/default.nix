@@ -1,5 +1,9 @@
 { config, pkgs, lib, catppuccin, home-manager, inputs, ... }:
 
+let
+  # Define the standard groups usually assigned to users (excluding wheel)
+  commonGroups = [ "networkmanager" "docker" "incus-admin" "lp" "scanner" "printadmin" ];
+in
 {
   # 1. Imports MUST be at the top level, outside of 'config'
   imports = [
@@ -7,35 +11,58 @@
     ./../../modules
   ];
 
-  # 2. Options (Defining the variable)
-  options.mainuser = lib.mkOption {
-    type = lib.types.str;
-    default = "joe";
+  # 2. Options (Defining the variables)
+  options = {
+    superUsers = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ "joe" ];
+      description = "List of users to be added to wheel and common groups";
+    };
+
+    normalUsers = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "List of users to be added to common groups (excluding wheel)";
+    };
+
+    mainuser = lib.mkOption {
+      type = lib.types.str;
+      default = "joe";
+      description = "The primary user (must be present in superUsers or normalUsers)";
+    };
   };
 
   # 3. Config (Setting the actual values)
   config = {
 
-  # 1. Install the Tailscale package
-  environment.systemPackages = [ 
-  pkgs.tailscale 
-  pkgs.kdePackages.krdc
-  ];
+    # Validation: Ensure the selected mainuser is actually in one of the provided lists
+    assertions = [
+      {
+        assertion = builtins.elem config.mainuser (config.superUsers ++ config.normalUsers);
+        message = "The 'mainuser' (${config.mainuser}) must be listed in either 'superUsers' or 'normalUsers'.";
+      }
+    ];
 
-  # 2. Enable the Tailscale daemon
-  services.tailscale.enable = true;
+    # 1. Install the Tailscale package
+    environment.systemPackages = [ 
+      pkgs.tailscale 
+      pkgs.kdePackages.krdc
+    ];
 
-  services.openssh.enable = true;
+    # 2. Enable the Tailscale daemon
+    services.tailscale.enable = true;
 
-  # 3. Open the firewall for Tailscale's default port
-  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+    services.openssh.enable = true;
 
-      modules = {
+    # 3. Open the firewall for Tailscale's default port
+    networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+
+    modules = {
       podman.enable = true;
     };
+
     # It is safe to also explicitly define this here just in case
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
     nixpkgs.config.allowUnfree = true;
 
     networking.networkmanager.enable = true;
@@ -55,22 +82,46 @@
     };
 
     services.desktopManager.plasma6.enable = true;
+
     # Open the RDP port in the firewall
     networking.firewall.allowedTCPPorts = [ 3389 ];
 
     boot.loader.efi.canTouchEfiVariables = true;
+
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
-    # ... Include the rest of your settings (Networking, Users, etc.) here ...
+    # --- User Configuration ---
+    
+    users.users = lib.mkMerge [
+      # 1. Generate Superusers (Wheel + Common Groups)
+      (lib.genAttrs config.superUsers (user: {
+        isNormalUser = true;
+        extraGroups = commonGroups ++ [ "wheel" ];
+      }))
 
-    users.users.${config.mainuser} = {
-      isNormalUser = true;
-      extraGroups = [ "networkmanager" "wheel" "docker" "incus-admin" "lp" "scanner" "printadmin" ];
-    };
+      # 2. Generate Normal Users (Common Groups only)
+      (lib.genAttrs config.normalUsers (user: {
+        isNormalUser = true;
+        extraGroups = commonGroups;
+      }))
+
+      # 3. Hardcoded Admin User (Wheel only)
+      {
+        admin = {
+          isNormalUser = true;
+          extraGroups = [ "wheel" ];
+        };
+      }
+    ];
+
+    # --- Home Manager Configuration ---
 
     home-manager = {
       extraSpecialArgs = { inherit inputs; };
-      users.${config.mainuser} = ./../../home/users + "/${config.mainuser}";
+      # Generate home-manager configs for ALL users (Supers, Normals, and Admin)
+      users = lib.genAttrs (config.superUsers ++ config.normalUsers ++ [ "admin" ]) (user: 
+        ./../../home/users + "/${user}"
+      );
     };
 
     system.stateVersion = "25.05";
