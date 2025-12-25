@@ -3,6 +3,13 @@
   config = {
       environment.systemPackages = with pkgs; = [ 
       tailscale
+      wget
+      curl
+      unzip
+      htop
+      micro
+      neovim
+      git
       ];
   }
 }
