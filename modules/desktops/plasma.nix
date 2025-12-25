@@ -15,6 +15,7 @@
     kdePackages.kcalc
     kdePackages.spectacle # Screenshot tool
     kdePackages.partitionmanager
+    kdePackages.krdc
   ];
 
   # Configure KWallet to unlock on login
