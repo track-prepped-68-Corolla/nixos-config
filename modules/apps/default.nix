@@ -2,8 +2,7 @@
 {
   config = {
       environment.systemPackages = with pkgs; = [ 
-      pkgs.tailscale 
-      pkgs.kdePackages.krdc
+      tailscale
       ];
   }
 }
