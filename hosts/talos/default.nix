@@ -33,7 +33,7 @@
     # 1. Install the Tailscale package
     environment.systemPackages = [ 
     pkgs.tailscale 
-    kdePackages.krdc 
+    pkgs.kdePackages.krdc 
     ];
 
     # 2. Enable the Tailscale daemon
