@@ -5,7 +5,9 @@ let
   commonGroups = [ "networkmanager" "docker" "incus-admin" "lp" "scanner" "printadmin" ];
 in
 {
-  # 1. Imports MUST be at the top level, outside of 'config'
+  # ---------------------------------------------------------------------------
+  # 1. Imports
+  # ---------------------------------------------------------------------------
   imports = [
     ./hardware-configuration.nix
     ./../../modules/services/sddm.nix
@@ -18,7 +20,9 @@ in
     ./../../modules/themes/catppuccin.nix
   ];
 
-  # 2. Options (Defining the variables)
+  # ---------------------------------------------------------------------------
+  # 2. Options
+  # ---------------------------------------------------------------------------
   options = {
     superUsers = lib.mkOption {
       type = lib.types.listOf lib.types.str;
@@ -39,10 +43,12 @@ in
     };
   };
 
-  # 3. Config (Setting the actual values)
+  # ---------------------------------------------------------------------------
+  # 3. Configuration
+  # ---------------------------------------------------------------------------
   config = {
 
-    # Validation: Ensure the selected mainuser is actually in one of the provided lists
+    # --- System Validation ---
     assertions = [
       {
         assertion = builtins.elem config.mainuser (config.superUsers ++ config.normalUsers);
@@ -50,55 +56,59 @@ in
       }
     ];
 
-    # 1. Install the Tailscale package
-    environment.systemPackages = [ 
-      pkgs.tailscale 
+    # --- Nix & System General ---
+    nixpkgs = {
+      hostPlatform = lib.mkDefault "x86_64-linux";
+      config.allowUnfree = true;
+    };
+
+    system.stateVersion = "25.05";
+
+    environment.systemPackages = [
+      pkgs.tailscale
       pkgs.kdePackages.krdc
     ];
 
-    # 2. Enable the Tailscale daemon
-    services.tailscale.enable = true;
+    # --- Boot & Kernel ---
+    boot = {
+      kernelPackages = pkgs.linuxPackages_latest;
+      loader = {
+        efi.canTouchEfiVariables = true;
+        grub = {
+          enable = true;
+          device = "nodev";
+          efiSupport = true;
+        };
+      };
+    };
 
-    services.openssh.enable = true;
+    # --- Networking ---
+    networking = {
+      hostName = "strix";
+      networkmanager.enable = true;
 
-    # 3. Open the firewall for Tailscale's default port
-    networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+      firewall = {
+        allowedUDPPorts = [ config.services.tailscale.port ]; # Open Tailscale port
+        allowedTCPPorts = [ 3389 ]; # Open RDP port
+      };
+    };
 
+    # --- Hardware ---
+    hardware.bluetooth.enable = true;
+
+    # --- Services ---
+    services = {
+      openssh.enable = true;
+      tailscale.enable = true;
+      desktopManager.plasma6.enable = true;
+    };
+
+    # --- Virtualization & Modules ---
     modules = {
       podman.enable = true;
     };
 
-    # It is safe to also explicitly define this here just in case
-    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-    nixpkgs.config.allowUnfree = true;
-
-    networking.networkmanager.enable = true;
-
-    hardware.bluetooth.enable = true;
-
-    networking.hostName = "strix";
-
-    boot.loader.grub = {
-      enable = true;
-      device = "nodev";
-      efiSupport = true;
-    };
-
-    services = {
-      supergfxd.enable = false;
-    };
-
-    services.desktopManager.plasma6.enable = true;
-
-    # Open the RDP port in the firewall
-    networking.firewall.allowedTCPPorts = [ 3389 ];
-
-    boot.loader.efi.canTouchEfiVariables = true;
-
-    boot.kernelPackages = pkgs.linuxPackages_latest;
-
     # --- User Configuration ---
-
     users.users = lib.mkMerge [
       # 1. Generate Superusers (Wheel + Common Groups)
       (lib.genAttrs config.superUsers (user: {
@@ -122,15 +132,12 @@ in
     ];
 
     # --- Home Manager Configuration ---
-
     home-manager = {
       extraSpecialArgs = { inherit inputs; };
       # Generate home-manager configs for ALL users (Supers, Normals, and Admin)
-      users = lib.genAttrs (config.superUsers ++ config.normalUsers ++ [ "admin" ]) (user: 
+      users = lib.genAttrs (config.superUsers ++ config.normalUsers ++ [ "admin" ]) (user:
         ./../../home/users + "/${user}"
       );
     };
-
-    system.stateVersion = "25.05";
   };
 }

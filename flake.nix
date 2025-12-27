@@ -83,6 +83,15 @@
           modules = sharedModules ++ [
             ./hosts/talos
 
+           ];
+        };
+
+        # third host
+        strix = nixpkgs.lib.nixosSystem {
+          specialArgs = sharedArgs;
+          modules = sharedModules ++ [
+            ./hosts/strix
+
           ];
         };
         
