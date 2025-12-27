@@ -16,7 +16,7 @@
 
     # 2. NVIDIA CDI Integration
     # This generates the CDI spec for Podman to talk to the GPU
-    hardware.nvidia-container-toolkit.enable = true;
+    #hardware.nvidia-container-toolkit.enable = true;
 
     # 3. CLI Tools & Aliases
     environment.systemPackages = with pkgs; [
