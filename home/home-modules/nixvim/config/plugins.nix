@@ -2,10 +2,16 @@
   programs.nixvim.plugins = {
     lualine.enable = true;
 
+    # [FIX] Explicitly enable web-devicons to fix the deprecation warning
+    web-devicons.enable = true;
+
     # File Explorer
     neo-tree = {
       enable = true;
-      closeIfLastWindow = true;
+      # [FIX] 'closeIfLastWindow' was moved into 'settings' and renamed to snake_case
+      settings = {
+        close_if_last_window = true;
+      };
     };
 
     # Fuzzy Finder
@@ -22,8 +28,8 @@
     treesitter = {
       enable = true;
       settings = {
-          highlight.enable = true;
-          indent.enable = true;
+        highlight.enable = true;
+        indent.enable = true;
       };
     };
   };

@@ -1,7 +1,9 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    # [FIX] Renamed from 'homeManagerModules' to 'homeModules'
+    inputs.nixvim.homeModules.nixvim
+
     ./config/options.nix
     ./config/keymaps.nix
     ./config/plugins.nix
@@ -11,7 +13,6 @@
     enable = true;
     defaultEditor = true;
 
-    # We can enable the colorscheme here globally for the module
     colorschemes.catppuccin = {
       enable = true;
       settings.flavour = "mocha";
