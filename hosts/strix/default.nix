@@ -69,7 +69,7 @@ in
 
     hardware.bluetooth.enable = true;
 
-    networking.hostName = "rog";
+    networking.hostName = "strix";
 
     boot.loader.grub = {
       enable = true;
