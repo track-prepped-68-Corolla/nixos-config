@@ -9,6 +9,8 @@ in
   imports = [
     ./hardware-configuration.nix
     ./../../modules/services/sddm.nix
+    ./../../modules/services/printing
+    ./../../modules/apps
     ./../../modules/desktops/plasma.nix
     ./../../modules/system/podman.nix
     ./../../modules/system/virt.nix
