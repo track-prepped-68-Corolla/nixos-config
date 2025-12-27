@@ -8,7 +8,12 @@ in
   # 1. Imports MUST be at the top level, outside of 'config'
   imports = [
     ./hardware-configuration.nix
-    ./../../modules
+    ./../../modules/services/sddm.nix
+    ./../../modules/desktops/plasma.nix
+    ./../../modules/system/podman.nix
+    ./../../modules/system/virt.nix
+    ./../../modules/profiles/gaming.nix
+    ./../../modules/themes/catppuccin.nix
   ];
 
   # 2. Options (Defining the variables)
