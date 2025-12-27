@@ -1,21 +1,34 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  # Enable OpenGL / Hardware Acceleration
-  hardware.graphics.enable = true;
+  # 1. Define the Option
+  options.modules.hardware.nvidia = {
+    enable = lib.mkEnableOption "NVIDIA proprietary drivers and optimizations";
+  };
 
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  # 2. Define the Config (Only runs if enable = true)
+  config = lib.mkIf config.modules.hardware.nvidia.enable {
 
-  # Enable Nvidia Container Toolkit (for Docker/Incus)
-  hardware.nvidia-container-toolkit.enable = true;
+    # Enable 32-bit support (Steam, etc.)
+    hardware.graphics = {
+      enable = lib.mkDefault true;
+      enable32Bit = lib.mkDefault true;
+    };
 
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    powerManagement.finegrained = true;
-    open = true;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    services.xserver.videoDrivers = [ "nvidia" ];
+
+    # Toggle the Podman integration we built earlier
+    modules.system.podman.nvidia.enable = lib.mkDefault true;
+
+    hardware.nvidia = {
+      modesetting.enable = lib.mkDefault true;
+      powerManagement = {
+        enable = lib.mkDefault true;
+        finegrained = lib.mkDefault false;
+      };
+      open = lib.mkDefault true;
+      nvidiaSettings = lib.mkDefault true;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
+    };
   };
 }

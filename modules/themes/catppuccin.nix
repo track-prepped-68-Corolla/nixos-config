@@ -1,20 +1,24 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Global Catppuccin settings
-  catppuccin = {
-    enable = true;
-    flavor = "mocha";
-    accent = "mauve";
-    cache.enable = true;
+  options.modules.themes.catppuccin = {
+    enable = lib.mkEnableOption "Catppuccin global theme";
   };
 
-  # Grub specific theme
-  catppuccin.grub = {
-    enable = true;
-    flavor = "mocha";
-  };
+  config = lib.mkIf config.modules.themes.catppuccin.enable {
 
-  # Fonts (often considered part of the "theme" or "aesthetic")
-  fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+    catppuccin = {
+      enable = lib.mkDefault true;
+      flavor = lib.mkDefault "mocha";
+      accent = lib.mkDefault "mauve";
+      cache.enable = true;
+    };
+
+    catppuccin.grub = {
+      enable = lib.mkDefault true;
+      flavor = lib.mkDefault "mocha";
+    };
+
+    fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+  };
 }

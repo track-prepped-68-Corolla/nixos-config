@@ -1,15 +1,27 @@
-{ config, pkgs, lib, catppuccin, home-manager, inputs, ... }:
-
 {
-  # 1. Imports MUST be at the top level, outside of 'config'
   imports = [
-    ./services/sddm.nix
-    ./services/printing
+    # Desktops
     ./desktops/plasma.nix
+    ./desktops/cosmic.nix
+
+    # Hardware
     ./hardware/nvidia.nix
+    ./hardware/amd.nix
+
+    # Profiles
+    ./profiles/gaming.nix
+    ./profiles/couchgaming.nix
+
+    # Services
+    ./services/sddm.nix
+    ./services/printing.nix
+
+    # System
     ./system/virt.nix
     ./system/podman.nix
-    ./profiles/gaming.nix
+    ./system/user.nix   # <--- THIS IS THE MISSING LINE
+
+    # Themes
     ./themes/catppuccin.nix
   ];
 }

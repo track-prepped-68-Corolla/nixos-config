@@ -1,55 +1,20 @@
-{ config, pkgs, lib, catppuccin, home-manager, inputs, ... }:
+{ config, pkgs, ... }:
 
 {
-  # 1. Imports MUST be at the top level, outside of 'config'
   imports = [
     ./hardware-configuration.nix
-    ./../../modules/services/sddm.nix
-    ./../../modules/desktops/plasma.nix
-    ./../../modules/system/podman.nix
-    #./../../modules/hardware/nvidia.nix
-    #./../../modules/system/virt.nix
-    #./../../modules/profiles/gaming.nix
-    ./../../modules/themes/catppuccin.nix
   ];
 
-  # 2. Options (Defining the variable)
-  options.mainUser = lib.mkOption {
-    type = lib.types.str;
-    default = "jen";
-  };
+  networking.hostName = "thinkpad";
 
-  # 3. Config (Setting the actual values)
-  config = {
-    # It is safe to also explicitly define this here just in case
-    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  # --- User Configuration ---
+  modules.system.user.enable = true;
+  mainuser = "jen";
+  superUsers = [ "jen" ];
 
-    nixpkgs.config.allowUnfree = true;
-
-    networking.networkmanager.enable = true;
-
-    networking.hostName = "thinkpad";
-
-    boot.loader.grub = {
-      enable = true;
-      device = "nodev";
-      efiSupport = true;
-    };
-    boot.loader.efi.canTouchEfiVariables = true;
-    boot.kernelPackages = pkgs.linuxPackages_6_17;
-
-    # ... Include the rest of your settings (Networking, Users, etc.) here ...
-
-    users.users.${config.mainUser} = {
-      isNormalUser = true;
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
-    };
-
-    home-manager = {
-      extraSpecialArgs = { inherit inputs; };
-      users.${config.mainUser} = ./../../home/users + "/${config.mainUser}";
-    };
-
-    system.stateVersion = "25.05";
-  };
+  # --- Modules ---
+  modules.desktops.plasma.enable = true;
+  modules.services.sddm.enable = true;
+  modules.services.printing.enable = true;
+  modules.themes.catppuccin.enable = true;
 }

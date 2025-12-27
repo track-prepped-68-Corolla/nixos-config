@@ -1,19 +1,22 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  # You need this for SDDM and XKB settings to work!
-  services.xserver.enable = true;
-
-  # Enable the SDDM login manager
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-
-  # Configure keymap
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+  options.modules.services.sddm = {
+    enable = lib.mkEnableOption "SDDM Display Manager";
   };
 
-  # If you want to theme SDDM with Catppuccin
-  # catppuccin.sddm.enable = true;
+  config = lib.mkIf config.modules.services.sddm.enable {
+
+    services.xserver.enable = lib.mkDefault true;
+
+    services.displayManager.sddm = {
+      enable = lib.mkDefault true;
+      wayland.enable = lib.mkDefault true;
+    };
+
+    services.xserver.xkb = {
+      layout = lib.mkDefault "us";
+      variant = lib.mkDefault "";
+    };
+  };
 }

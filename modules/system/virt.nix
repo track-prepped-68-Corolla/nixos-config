@@ -1,19 +1,24 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  virtualisation.vmware.host.enable = true;
-  virtualisation.libvirtd.enable = true;
-  virtualisation.spiceUSBRedirection.enable = true;
-  programs.virt-manager.enable = true;
-  users.groups.libvirtd.members = [ config.mainuser ];
-
-  # Incus settings
-  virtualisation.incus = {
-    enable = true;
-    # Add this line to satisfy the assertion
-    package = pkgs.incus;
+  options.modules.system.virt = {
+    enable = lib.mkEnableOption "virtualization (libvirt, incus, vmware)";
   };
 
-  # Ensure nftables is definitely on for this module
-  networking.nftables.enable = true;
+  config = lib.mkIf config.modules.system.virt.enable {
+
+    virtualisation.vmware.host.enable = lib.mkDefault true;
+    virtualisation.libvirtd.enable = lib.mkDefault true;
+    virtualisation.spiceUSBRedirection.enable = lib.mkDefault true;
+    programs.virt-manager.enable = lib.mkDefault true;
+
+    users.groups.libvirtd.members = [ config.mainuser ];
+
+    virtualisation.incus = {
+      enable = lib.mkDefault true;
+      package = pkgs.incus;
+    };
+
+    networking.nftables.enable = lib.mkDefault true;
+  };
 }

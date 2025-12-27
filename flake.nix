@@ -37,7 +37,6 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     # --- Applications ---
-    # [NEW] Added Nixvim input here
     nixvim = {
         url = "github:nix-community/nixvim";
         inputs.nixpkgs.follows = "nixpkgs";
@@ -47,58 +46,93 @@
   outputs = { self, nixpkgs, ... }@inputs:
     let
       # 1. SHARED ARGUMENTS
-      # We pass 'inputs' to all modules so they can access things like inputs.nixvim
+      # Makes 'inputs' available to all modules
       sharedArgs = {
         inherit inputs;
-        # We also inherit specific inputs for convenience if your modules expect them
         inherit (inputs) catppuccin home-manager jovian-nixos nixos-hardware;
       };
 
       # 2. SHARED MODULES
-      # These modules are applied to every host defined below
+      # Applied to every host in the fleet
       sharedModules = [
-        # Core
+        # The Hub: Imports all your custom modules
+        ./modules/default.nix
+
+        # External Inputs
         inputs.home-manager.nixosModules.default
         inputs.sops-nix.nixosModules.sops
-
-        # Desktop / Theming
         inputs.catppuccin.nixosModules.catppuccin
         inputs.stylix.nixosModules.stylix
         inputs.nixos-cosmic.nixosModules.default
         inputs.jovian-nixos.nixosModules.default
 
-        # Inline Configuration (Caches, Plasma, Nix settings)
+        # --- GLOBAL CONFIGURATION ---
         {
-          nix.settings = {
-            experimental-features = [ "nix-command" "flakes" ];
-            substituters = [ "https://cosmic.cachix.org/" ];
-            trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-          };
+          config = {
+            # 1. System Basics
+            system.stateVersion = "25.05";
+            nixpkgs.config.allowUnfree = true;
 
-          # Register Plasma Manager for Home Manager usage
-          home-manager.sharedModules = [
-            inputs.plasma-manager.homeModules.plasma-manager
-          ];
+            # --- CONNECTIVITY ---
+            networking.networkmanager.enable = true;
+
+            # Enable Bluetooth & Power it up on boot
+            hardware.bluetooth = {
+              enable = true;
+              powerOnBoot = true;
+            };
+
+            # 2. Localization (US/NY)
+            time.timeZone = "America/New_York";
+            i18n.defaultLocale = "en_US.UTF-8";
+
+            # 3. Global Bootloader (GRUB for UEFI)
+            # We explicitly disable systemd-boot to avoid conflicts with auto-generated hardware configs
+            boot.loader = {
+              systemd-boot.enable = false;
+
+              grub = {
+                enable = true;
+                efiSupport = true;
+                device = "nodev";
+                useOSProber = true;
+              };
+
+              efi.canTouchEfiVariables = true;
+            };
+
+            # 4. Nix Settings & Caches
+            nix.settings = {
+              experimental-features = [ "nix-command" "flakes" ];
+              substituters = [ "https://cosmic.cachix.org/" ];
+              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+            };
+
+            # 5. Home Manager Integration
+            home-manager.sharedModules = [
+              inputs.plasma-manager.homeModules.plasma-manager
+            ];
+          };
         }
       ];
     in
     {
       nixosConfigurations = {
 
-        # --- Host: ROG ---
+        # --- Host: ROG (ASUS Flow) ---
         rog = nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
           modules = sharedModules ++ [
-            ./hosts/rog
+            ./hosts/rog/default.nix
             inputs.nixos-hardware.nixosModules.asus-flow-gz301vu
           ];
         };
 
-        # --- Host: Thinkpad ---
+        # --- Host: Thinkpad (T14 AMD) ---
         thinkpad = nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
           modules = sharedModules ++ [
-            ./hosts/thinkpad
+            ./hosts/thinkpad/default.nix
             inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
           ];
         };
@@ -107,15 +141,15 @@
         talos = nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
           modules = sharedModules ++ [
-            ./hosts/talos
+            ./hosts/talos/default.nix
           ];
         };
 
-        # --- Host: Strix ---
+        # --- Host: Strix (Strix Halo) ---
         strix = nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
           modules = sharedModules ++ [
-            ./hosts/strix
+            ./hosts/strix/default.nix
           ];
         };
 

@@ -1,129 +1,43 @@
-{ config, pkgs, lib, catppuccin, home-manager, inputs, ... }:
+{ config, pkgs, ... }:
 
-let
-  # Define the standard groups usually assigned to users (excluding wheel)
-  commonGroups = [ "networkmanager" "docker" "incus-admin" "lp" "scanner" "printadmin" ];
-in
 {
-  # 1. Imports MUST be at the top level, outside of 'config'
   imports = [
     ./hardware-configuration.nix
-    ./../../modules
+    # Note: Global modules are imported automatically via flake.nix
   ];
 
-  # 2. Options (Defining the variables)
-  options = {
-    superUsers = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ "joe" ];
-      description = "List of users to be added to wheel and common groups";
-    };
+  # --- System Identity ---
+  networking.hostName = "rog";
 
-    normalUsers = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [];
-      description = "List of users to be added to common groups (excluding wheel)";
-    };
+  # --- User Configuration ---
+  # Enable the user module we just built
+  modules.system.user.enable = true;
 
-    mainuser = lib.mkOption {
-      type = lib.types.str;
-      default = "joe";
-      description = "The primary user (must be present in superUsers or normalUsers)";
-    };
-  };
+  # Define your personal user here.
+  # Note: 'admin' is automatically added to this list by your user.nix module.
+  superUsers = [ "joe" ];
 
-  # 3. Config (Setting the actual values)
-  config = {
+  # Set the "primary" user for things like autologin or file ownership.
+  # You can set this to "admin" if you prefer that as the default.
+  mainuser = "joe";
 
-    # Validation: Ensure the selected mainuser is actually in one of the provided lists
-    assertions = [
-      {
-        assertion = builtins.elem config.mainuser (config.superUsers ++ config.normalUsers);
-        message = "The 'mainuser' (${config.mainuser}) must be listed in either 'superUsers' or 'normalUsers'.";
-      }
-    ];
+  # --- Feature Modules ---
 
-    # 1. Install the Tailscale package
-    environment.systemPackages = [ 
-      pkgs.tailscale 
-      pkgs.kdePackages.krdc
-    ];
+  # Desktop & Display
+  modules.desktops.plasma.enable = true;
+  modules.services.sddm.enable = true;
 
-    # 2. Enable the Tailscale daemon
-    services.tailscale.enable = true;
+  # Hardware
+  modules.hardware.nvidia.enable = true;
+  modules.services.printing.enable = true;
 
-    services.openssh.enable = true;
+  # Profiles
+  modules.profiles.gaming.enable = true;
 
-    # 3. Open the firewall for Tailscale's default port
-    networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+  # System Services
+  modules.system.virt.enable = true;
+  modules.system.podman.enable = true; # Nvidia support is auto-detected
 
-    modules = {
-      podman.enable = true;
-    };
-
-    # It is safe to also explicitly define this here just in case
-    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-    nixpkgs.config.allowUnfree = true;
-
-    networking.networkmanager.enable = true;
-
-    hardware.bluetooth.enable = true;
-
-    networking.hostName = "rog";
-
-    boot.loader.grub = {
-      enable = true;
-      device = "nodev";
-      efiSupport = true;
-    };
-
-    services = {
-      supergfxd.enable = false;
-    };
-
-    services.desktopManager.plasma6.enable = true;
-
-    # Open the RDP port in the firewall
-    networking.firewall.allowedTCPPorts = [ 3389 ];
-
-    boot.loader.efi.canTouchEfiVariables = true;
-
-    boot.kernelPackages = pkgs.linuxPackages_latest;
-
-    # --- User Configuration ---
-    
-    users.users = lib.mkMerge [
-      # 1. Generate Superusers (Wheel + Common Groups)
-      (lib.genAttrs config.superUsers (user: {
-        isNormalUser = true;
-        extraGroups = commonGroups ++ [ "wheel" ];
-      }))
-
-      # 2. Generate Normal Users (Common Groups only)
-      (lib.genAttrs config.normalUsers (user: {
-        isNormalUser = true;
-        extraGroups = commonGroups;
-      }))
-
-      # 3. Hardcoded Admin User (Wheel only)
-      {
-        admin = {
-          isNormalUser = true;
-          extraGroups = [ "wheel" ];
-        };
-      }
-    ];
-
-    # --- Home Manager Configuration ---
-
-    home-manager = {
-      extraSpecialArgs = { inherit inputs; };
-      # Generate home-manager configs for ALL users (Supers, Normals, and Admin)
-      users = lib.genAttrs (config.superUsers ++ config.normalUsers ++ [ "admin" ]) (user: 
-        ./../../home/users + "/${user}"
-      );
-    };
-
-    system.stateVersion = "25.05";
-  };
+  # Theming
+  modules.themes.catppuccin.enable = true;
 }

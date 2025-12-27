@@ -1,20 +1,26 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  # Jovian-NixOS (Steam Deck UI/Optimizations)
-  jovian.steam = {
-    enable = true;
-    autoStart = true;
-    user = config.mainuser;
-    desktopSession = "plasma";
+  options.modules.profiles.couchgaming = {
+    enable = lib.mkEnableOption "couch gaming (Steam Deck UI) configuration";
   };
 
-  # Standard Steam Client
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-    gamescopeSession.enable = false;
+  config = lib.mkIf config.modules.profiles.couchgaming.enable {
+
+    # Jovian-NixOS (Steam Deck UI enabled)
+    jovian.steam = {
+      enable = lib.mkDefault true;
+      autoStart = lib.mkDefault true; # Boots directly into Steam
+      user = config.mainuser;
+      desktopSession = "plasma";
+    };
+
+    programs.steam = {
+      enable = lib.mkDefault true;
+      remotePlay.openFirewall = lib.mkDefault true;
+      dedicatedServer.openFirewall = lib.mkDefault true;
+      localNetworkGameTransfers.openFirewall = lib.mkDefault true;
+      gamescopeSession.enable = lib.mkDefault false;
+    };
   };
 }
