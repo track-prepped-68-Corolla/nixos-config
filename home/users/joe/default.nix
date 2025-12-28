@@ -47,7 +47,7 @@
     yazi
     nixfmt-rfc-style
     oh-my-posh
-    # neovim  <-- REMOVED: Managed by the Nixvim module imported above
+    tmux
 
     # DESKTOP APPS
     brave
@@ -64,10 +64,14 @@
 
     # CREATIVE & OFFICE
     krita
+    openscad
+    freecad
+    blender
     onlyoffice-desktopeditors
 
     # GAMING
     mangohud
+    heroic
     lutris
 
     # Custom Discord (with Vencord/OpenASAR)
