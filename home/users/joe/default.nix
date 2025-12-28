@@ -47,7 +47,7 @@
     yazi
     nixfmt-rfc-style
     oh-my-posh
-    tmux
+    zellij
 
     # DESKTOP APPS
     brave
