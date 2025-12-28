@@ -25,6 +25,7 @@
     # System
     ./system/virt.nix
     ./system/podman.nix
+    ./system/cockpit.nix
     ./system/user.nix
 
     # Themes
