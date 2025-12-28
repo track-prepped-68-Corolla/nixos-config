@@ -1,7 +1,9 @@
 {
   imports = [
-    #default apps
+
+    # Default Apps
     ./apps
+
     # Desktops
     ./desktops/plasma.nix
     ./desktops/cosmic.nix
@@ -21,7 +23,7 @@
     # System
     ./system/virt.nix
     ./system/podman.nix
-    ./system/user.nix   # <--- THIS IS THE MISSING LINE
+    ./system/user.nix
 
     # Themes
     ./themes/catppuccin.nix
