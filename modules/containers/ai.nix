@@ -64,7 +64,6 @@ in
         environment = {
           "PORT" = "3000";
           "OLLAMA_BASE_URL" = "http://127.0.0.1:8080";
-          "WEBUI_AUTH" = "false";
         };
         volumes = [ "open-webui-data:/app/backend/data" ];
         extraOptions = [ "--network=host" ];
