@@ -25,11 +25,15 @@
   modules.profiles.gaming.enable = true;
 
   modules.system.virt.enable = true;
-  modules.system.podman.enable = true;
   modules.themes.catppuccin.enable = true;
   modules.services.tailscale.enable = true;
 
   #containers
+  modules.system.podman.enable = true;
+  modules.system.cockpit = {
+   enable = true;
+   kvm.enable = true;
+   };
   modules.containers.ai = {
     enable = true;
     modelPath = "/home/joe/models";
