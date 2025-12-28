@@ -30,10 +30,10 @@
 
   #containers
   modules.system.podman.enable = true;
-  modules.system.cockpit = {
-   enable = true;
-   kvm.enable = true;
-   };
+  #modules.system.cockpit = {
+   #enable = true;
+   #kvm.enable = true;
+  #};
   modules.containers.ai = {
     enable = true;
     modelPath = "/home/joe/models";
