@@ -51,7 +51,7 @@ in
         ports = [ "8080:8080" ];
         volumes = [
         "${cfg.modelPath}:/models"
-        "rocm-cache:/root/.cache"
+        "/home/joe/containers/rocm:/root/.cache"
         ];
 
         extraOptions = [
