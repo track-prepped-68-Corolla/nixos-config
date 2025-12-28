@@ -26,7 +26,6 @@
     # 3. CLI Tools
     environment.systemPackages = with pkgs; [
       podman-compose
-      docker-compose
     ];
 
     # 4. Global Socket Configuration

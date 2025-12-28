@@ -3,7 +3,6 @@
   config = {
       environment.systemPackages = with pkgs; [
       nixos-generators
-      tailscale
       wget
       curl
       unzip

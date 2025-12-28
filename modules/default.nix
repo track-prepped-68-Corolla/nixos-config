@@ -11,6 +11,7 @@
     # Hardware
     ./hardware/nvidia.nix
     ./hardware/amd.nix
+    ./hardware/asus.nix
 
     # Profiles
     ./profiles/gaming.nix
@@ -19,6 +20,7 @@
     # Services
     ./services/sddm.nix
     ./services/printing.nix
+    ./services/tailscale.nix
 
     # System
     ./system/virt.nix
@@ -27,5 +29,8 @@
 
     # Themes
     ./themes/catppuccin.nix
+
+    # Containers
+    ./containers/ai.nix
   ];
 }

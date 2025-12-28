@@ -18,6 +18,7 @@
 
   # HARDWARE: Switched to AMD for Strix Halo 395
   modules.hardware.amd.enable = true;
+  modules.hardware.asus.enable = true;
   modules.services.printing.enable = true;
 
   # Gaming Profile
@@ -26,4 +27,14 @@
   modules.system.virt.enable = true;
   modules.system.podman.enable = true;
   modules.themes.catppuccin.enable = true;
+  modules.services.tailscale.enable = true;
+
+  #containers
+  modules.containers.ai = {
+    enable = true;
+    modelPath = "/home/joe/models";
+    modelName = "qwen2.5-coder-32b-instruct-q8_0.gguf";
+    # You can override the port here if needed
+    # openWebUiPort = 8888;
+  };
 }

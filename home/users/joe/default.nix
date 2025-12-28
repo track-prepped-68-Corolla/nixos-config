@@ -55,7 +55,6 @@
     signal-desktop
     slack
     localsend
-    trayscale
 
     # DEVELOPMENT
     gitFull
