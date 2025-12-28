@@ -1,5 +1,7 @@
 {
   imports = [
+    #default apps
+    ./apps
     # Desktops
     ./desktops/plasma.nix
     ./desktops/cosmic.nix
