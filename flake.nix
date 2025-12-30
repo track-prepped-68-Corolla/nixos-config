@@ -1,7 +1,7 @@
 {
   description = "NixOS Configuration";
 
-#test comment
+  #test comment
 
   inputs = {
     # --- Core ---
