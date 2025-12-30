@@ -10,26 +10,14 @@ with lib;
 let
   cfg = config.modules.system.nh;
 
-  # Format command
-  formatCmd = ''
-    echo "--- ✨ Formatting ---"
-    ${pkgs.findutils}/bin/find "$FLAKE_DIR" -name "*.nix" -exec ${pkgs.nixfmt-rfc-style}/bin/nixfmt {} +
-  '';
-
-  # --- Script 1: sys-test (Dry Run / Temporary) ---
+  # --- Script 1: sys-test (Dry Run) ---
   sysTestScript = pkgs.writeShellScriptBin "sys-test" ''
     set -e
     FLAKE_DIR="${cfg.flakeDir}"
-
-    ${formatCmd}
-
+    echo "--- ✨ Formatting ---"
+    ${pkgs.findutils}/bin/find "$FLAKE_DIR" -name "*.nix" -exec ${pkgs.nixfmt-rfc-style}/bin/nixfmt {} +
     echo "--- 🛠️  Staging ---"
     ${pkgs.git}/bin/git -C "$FLAKE_DIR" add .
-
-    echo "--- 📄 Source Code Changes (Delta) ---"
-    # Pipe git output directly into delta for syntax highlighting
-    ${pkgs.git}/bin/git -C "$FLAKE_DIR" diff --cached | ${pkgs.delta}/bin/delta
-
     echo "--- 🧪 Running Test ---"
     ${pkgs.nh}/bin/nh os test "$FLAKE_DIR" --ask
     echo "✅ Test complete. Reboot to revert."
@@ -39,25 +27,17 @@ let
   sysUpdateScript = pkgs.writeShellScriptBin "sys-update" ''
     set -e
     FLAKE_DIR="${cfg.flakeDir}"
-
-    ${formatCmd}
-
+    echo "--- ✨ Formatting ---"
+    ${pkgs.findutils}/bin/find "$FLAKE_DIR" -name "*.nix" -exec ${pkgs.nixfmt-rfc-style}/bin/nixfmt {} +
     echo "--- 🛠️  Staging ---"
     ${pkgs.git}/bin/git -C "$FLAKE_DIR" add .
-
-    echo "--- 🔍 Previewing Build ---"
+    echo "--- 🔍 Previewing ---"
     ${pkgs.nh}/bin/nh os test "$FLAKE_DIR" --dry
-
-    echo ""
-    echo "--- 📄 Source Code Changes (Delta) ---"
-    ${pkgs.git}/bin/git -C "$FLAKE_DIR" diff --cached | ${pkgs.delta}/bin/delta
-
     echo ""
     read -p "Apply and commit? [y/N]: " choice
     if [[ "$choice" =~ ^[yY]$ ]]; then
       echo "--- 🚀 Switching ---"
       ${pkgs.nh}/bin/nh os switch "$FLAKE_DIR"
-
       echo "--- 💾 Committing ---"
       read -p "Commit message: " msg
       ${pkgs.git}/bin/git -C "$FLAKE_DIR" commit -m "$msg"
@@ -73,10 +53,6 @@ let
     FLAKE_DIR="${cfg.flakeDir}"
     echo "--- ⬇️  Pulling updates ---"
     ${pkgs.git}/bin/git -C "$FLAKE_DIR" pull --rebase --autostash
-
-    echo "--- 📄 Incoming Changes (Delta) ---"
-    ${pkgs.git}/bin/git -C "$FLAKE_DIR" diff HEAD@{1}..HEAD | ${pkgs.delta}/bin/delta
-
     echo "--- 🚀 Building and Switching ---"
     ${pkgs.nh}/bin/nh os switch "$FLAKE_DIR" --ask
     echo "✅ System updated!"
@@ -94,14 +70,13 @@ in
     };
   };
 
+  # Everything below is ONLY applied if enable = true
   config = mkIf cfg.enable {
     environment.systemPackages = [
       pkgs.nh
       pkgs.nvd
       pkgs.nix-output-monitor
       pkgs.nixfmt-rfc-style
-      pkgs.findutils
-      pkgs.delta # <--- Added Delta here
       sysTestScript
       sysUpdateScript
       sysDownScript
