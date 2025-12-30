@@ -35,7 +35,7 @@
   modules.system.podman.enable = true;
   modules.containers.distrobox.enable = true;
   modules.containers.distrobox.enableBoxBuddy = true;
-  modules.containers.mgmt-box.enable = true;
+  #modules.containers.mgmt-box.enable = true;
   modules.containers.ai = {
     enable = true;
     modelPath = "/home/joe/models";
