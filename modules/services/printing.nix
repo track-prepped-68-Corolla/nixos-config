@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.modules.services.printing = {
@@ -6,7 +11,7 @@
   };
 
   config = lib.mkIf config.modules.services.printing.enable {
-  # Enable the CUPS daemon
+    # Enable the CUPS daemon
     services.printing = {
       enable = true;
 

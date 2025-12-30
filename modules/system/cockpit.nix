@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   options.modules.system.cockpit = {
@@ -27,7 +32,7 @@
       # FIX: We comment this out because your pkgs is missing it.
       # Once you find the correct name (see below), uncomment it.
       # -----------------------------------------------------------
-       ++ lib.optionals config.modules.system.podman.enable [ pkgs.cockpit-podman ]
+      ++ lib.optionals config.modules.system.podman.enable [ pkgs.cockpit-podman ]
 
       # This usually exists, but if it fails too, comment it out.
       ++ lib.optionals config.modules.system.cockpit.kvm.enable [ pkgs.cockpit-machines ];

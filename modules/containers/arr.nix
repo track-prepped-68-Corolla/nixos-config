@@ -11,14 +11,21 @@
   # 2. Open Firewall Ports
   # These must match the ports exposed by Gluetun and Jellyfin
   networking.firewall = {
-    allowedTCPPorts = [ 
-      8096 8920       # Jellyfin
-      9696 7878 8989 6767 8686 # Arr Apps (via Gluetun)
-      8080 6881       # Qbittorrent (via Gluetun)
+    allowedTCPPorts = [
+      8096
+      8920 # Jellyfin
+      9696
+      7878
+      8989
+      6767
+      8686 # Arr Apps (via Gluetun)
+      8080
+      6881 # Qbittorrent (via Gluetun)
     ];
-    allowedUDPPorts = [ 
-      1900 7359       # Jellyfin Discovery
-      6881            # Qbittorrent
+    allowedUDPPorts = [
+      1900
+      7359 # Jellyfin Discovery
+      6881 # Qbittorrent
     ];
   };
 
@@ -32,7 +39,7 @@
         VPN_SERVICE_PROVIDER = "protonvpn";
         VPN_TYPE = "wireguard";
         SERVER_COUNTRIES = "Iceland,Switzerland,Sweden";
-        # WARNING: This key is world-readable in the Nix store. 
+        # WARNING: This key is world-readable in the Nix store.
         # See "Security Note" below for a better way to handle this.
         WIREGUARD_PRIVATE_KEY = "IEhu71iCYx++aR/EQ9a4ClYwuuBJEMmVw3yBZNmBxFg=";
         PORT_FORWARD_ONLY = "on";
@@ -57,21 +64,29 @@
     # --- RADARR ---
     radarr = {
       image = "lscr.io/linuxserver/radarr:latest";
-      environment = { PUID = "1000"; PGID = "1000"; TZ = "Etc/UTC"; };
+      environment = {
+        PUID = "1000";
+        PGID = "1000";
+        TZ = "Etc/UTC";
+      };
       volumes = [
         "/media/arr/radarr/config:/config"
         "/media/arr/radarr/movies:/movies"
         "/media/arr/qbittorrent/downloads:/downloads"
       ];
       # Connects to Gluetun's network namespace
-      extraOptions = [ "--network=container:gluetun" ]; 
+      extraOptions = [ "--network=container:gluetun" ];
       dependsOn = [ "gluetun" ];
     };
 
     # --- SONARR ---
     sonarr = {
       image = "lscr.io/linuxserver/sonarr:latest";
-      environment = { PUID = "1000"; PGID = "1000"; TZ = "Etc/UTC"; };
+      environment = {
+        PUID = "1000";
+        PGID = "1000";
+        TZ = "Etc/UTC";
+      };
       volumes = [
         "/media/arr/sonarr/config:/config"
         "/media/arr/sonarr/tvseries:/tv"
@@ -84,7 +99,11 @@
     # --- PROWLARR ---
     prowlarr = {
       image = "lscr.io/linuxserver/prowlarr:latest";
-      environment = { PUID = "1000"; PGID = "1000"; TZ = "Etc/UTC"; };
+      environment = {
+        PUID = "1000";
+        PGID = "1000";
+        TZ = "Etc/UTC";
+      };
       volumes = [ "/media/arr/prowlarr/config:/config" ];
       extraOptions = [ "--network=container:gluetun" ];
       dependsOn = [ "gluetun" ];
@@ -93,7 +112,11 @@
     # --- BAZARR ---
     bazarr = {
       image = "lscr.io/linuxserver/bazarr:latest";
-      environment = { PUID = "1000"; PGID = "1000"; TZ = "Etc/UTC"; };
+      environment = {
+        PUID = "1000";
+        PGID = "1000";
+        TZ = "Etc/UTC";
+      };
       volumes = [
         "/media/arr/bazarr/config:/config"
         "/media/arr/radarr/movies:/movies"
@@ -106,7 +129,11 @@
     # --- LIDARR ---
     lidarr = {
       image = "lscr.io/linuxserver/lidarr:latest";
-      environment = { PUID = "1000"; PGID = "1000"; TZ = "Etc/UTC"; };
+      environment = {
+        PUID = "1000";
+        PGID = "1000";
+        TZ = "Etc/UTC";
+      };
       volumes = [
         "/media/arr/lidarr/config:/config"
         "/media/arr/lidarr/music:/music"
@@ -119,9 +146,12 @@
     # --- QBITTORRENT ---
     qbittorrent = {
       image = "lscr.io/linuxserver/qbittorrent:latest";
-      environment = { 
-        PUID = "1000"; PGID = "1000"; TZ = "Etc/UTC"; 
-        WEBUI_PORT = "8080"; TORRENTING_PORT = "6881";
+      environment = {
+        PUID = "1000";
+        PGID = "1000";
+        TZ = "Etc/UTC";
+        WEBUI_PORT = "8080";
+        TORRENTING_PORT = "6881";
       };
       volumes = [
         "/media/arr/qbittorrent/config:/config"
@@ -134,7 +164,11 @@
     # --- JELLYFIN (Standalone) ---
     jellyfin = {
       image = "lscr.io/linuxserver/jellyfin:latest";
-      environment = { PUID = "1000"; PGID = "1000"; TZ = "Etc/UTC"; };
+      environment = {
+        PUID = "1000";
+        PGID = "1000";
+        TZ = "Etc/UTC";
+      };
       ports = [
         "8096:8096"
         "8920:8920"

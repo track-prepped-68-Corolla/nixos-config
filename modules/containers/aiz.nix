@@ -69,7 +69,56 @@ in
         ];
       };
 
-      # 2. THE FRONTEND (OpenWebUI)
+      # 2. THE IMAGE GENERATOR (ComfyUI on Strix Halo)
+      comfyui = {
+        # Using a more standard, stable tag
+        image = "docker.io/rocm/pytorch:latest";
+        autoStart = true;
+        environment = {
+          "HSA_OVERRIDE_GFX_VERSION" = "11.5.1";
+          "HSA_ENABLE_SDMA" = "0";
+          # Forces Python to look in the current dir for modules
+          "PYTHONPATH" = "/root/ComfyUI";
+        };
+
+        workdir = "/root/ComfyUI";
+
+        entrypoint = "/bin/sh";
+        cmd = [
+          "-c"
+          ''
+            # 1. Install missing dependencies
+            python3 -m pip install --no-cache-dir pyyaml
+            # 2. Install ComfyUI requirements
+            python3 -m pip install --no-cache-dir -r requirements.txt
+
+            # 3. Start ComfyUI with Strix Halo specific flags
+            python3 main.py --listen 0.0.0.0 --port 8188 --highvram --preview-method auto
+          ''
+        ];
+
+        extraOptions = [
+          "--network=host"
+          "--device=/dev/kfd"
+          "--device=/dev/dri"
+          "--security-opt=label=disable"
+          "--shm-size=16g"
+          "--group-add=video"
+          "--group-add=render"
+        ];
+
+        volumes = [
+          "/home/joe/containers/comfyui/app:/root/ComfyUI"
+          "${cfg.modelPath}:/root/ComfyUI/models"
+          "/home/joe/containers/comfyui/custom_nodes:/root/ComfyUI/custom_nodes"
+          "/home/joe/containers/comfyui/user:/root/ComfyUI/user"
+          "/home/joe/containers/comfyui/input:/root/ComfyUI/input"
+          "/home/joe/containers/comfyui/output:/root/ComfyUI/output"
+          "/home/joe/containers/comfyui/pip_cache:/root/.cache/pip"
+        ];
+      };
+
+      # 3. THE FRONTEND (OpenWebUI)
       open-webui = {
         image = "ghcr.io/open-webui/open-webui:main";
         autoStart = true;

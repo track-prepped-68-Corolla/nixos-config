@@ -6,6 +6,7 @@
   ];
 
   networking.hostName = "strix";
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # --- User Configuration ---
   modules.system.user.enable = true;
@@ -19,20 +20,22 @@
   # HARDWARE: Switched to AMD for Strix Halo 395
   modules.hardware.amd.enable = true;
   modules.hardware.asus.enable = true;
+  modules.hardware.yubikey.enable = true;
   modules.services.printing.enable = true;
 
   # Gaming Profile
   modules.profiles.gaming.enable = true;
 
   modules.system.virt.enable = true;
+  modules.system.nh.enable = true;
   modules.themes.catppuccin.enable = true;
   modules.services.tailscale.enable = true;
 
   #containers
   modules.system.podman.enable = true;
   #modules.system.cockpit = {
-   #enable = true;
-   #kvm.enable = true;
+  #enable = true;
+  #kvm.enable = true;
   #};
   modules.containers.ai = {
     enable = true;

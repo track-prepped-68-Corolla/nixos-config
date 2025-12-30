@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   # --- Imports ---
@@ -73,12 +78,6 @@
     mangohud
     heroic
     lutris
-
-    # Custom Discord (with Vencord/OpenASAR)
-    (pkgs.discord.override {
-      withOpenASAR = true;
-      enableAutoscroll = true;
-      withMoonlight = true;
-    })
+    discord
   ];
 }

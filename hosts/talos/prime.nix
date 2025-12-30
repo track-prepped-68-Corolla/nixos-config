@@ -1,5 +1,10 @@
 # /etc/nixos/nvidia-3090.nix
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Use hardware.graphics for modern NixOS (24.11+)

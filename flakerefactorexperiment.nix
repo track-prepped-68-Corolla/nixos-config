@@ -43,7 +43,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs =
+    { self, nixpkgs, ... }@inputs:
     let
       # 1. SHARED ARGUMENTS
       # Makes 'inputs' available to all modules
@@ -58,7 +59,8 @@
         ./modules/default.nix
       ];
 
-      forHost = hostname:
+      forHost =
+        hostname:
         nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
           modules = sharedModules ++ [

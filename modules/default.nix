@@ -12,6 +12,7 @@
     ./hardware/nvidia.nix
     ./hardware/amd.nix
     ./hardware/asus.nix
+    ./hardware/yubikey.nix
 
     # Profiles
     ./profiles/gaming.nix
@@ -27,6 +28,7 @@
     ./system/podman.nix
     #./system/cockpit.nix
     ./system/user.nix
+    ./system/nh.nix
 
     # Themes
     ./themes/catppuccin.nix

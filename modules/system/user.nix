@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   # Standard groups for all user accounts
@@ -32,7 +37,7 @@ in
 
     normalUsers = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [];
+      default = [ ];
       description = "List of users to be added to common groups (excluding wheel)";
     };
 

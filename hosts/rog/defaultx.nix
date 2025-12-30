@@ -1,4 +1,12 @@
-{ config, pkgs, lib, catppuccin, home-manager, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  catppuccin,
+  home-manager,
+  inputs,
+  ...
+}:
 
 {
   # 1. Imports MUST be at the top level, outside of 'config'
@@ -16,21 +24,21 @@
   # 3. Config (Setting the actual values)
   config = {
 
-  # 1. Install the Tailscale package
-  environment.systemPackages = [ 
-  pkgs.tailscale 
-  pkgs.kdePackages.krdc
-  ];
+    # 1. Install the Tailscale package
+    environment.systemPackages = [
+      pkgs.tailscale
+      pkgs.kdePackages.krdc
+    ];
 
-  # 2. Enable the Tailscale daemon
-  services.tailscale.enable = true;
+    # 2. Enable the Tailscale daemon
+    services.tailscale.enable = true;
 
-  services.openssh.enable = true;
+    services.openssh.enable = true;
 
-  # 3. Open the firewall for Tailscale's default port
-  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+    # 3. Open the firewall for Tailscale's default port
+    networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
 
-      modules = {
+    modules = {
       podman.enable = true;
     };
     # It is safe to also explicitly define this here just in case
@@ -65,7 +73,15 @@
 
     users.users.${config.mainuser} = {
       isNormalUser = true;
-      extraGroups = [ "networkmanager" "wheel" "docker" "incus-admin" "lp" "scanner" "printadmin" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "docker"
+        "incus-admin"
+        "lp"
+        "scanner"
+        "printadmin"
+      ];
     };
 
     home-manager = {

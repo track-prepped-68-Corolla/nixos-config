@@ -6,7 +6,6 @@
   home.username = "jen";
   home.homeDirectory = "/home/jen";
 
-
   xdg.configFile."distrobox/distrobox.conf".text = ''
     # Force Distrobox to use Docker instead of searching for Podman
 
@@ -33,14 +32,13 @@
   home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
-     firefox
-     krita
-     vlc
-     brave                       # Brave browser
-     kitty                       # Terminal emulator
-     onlyoffice-desktopeditors   # office
-     signal-desktop
-
+    firefox
+    krita
+    vlc
+    brave # Brave browser
+    kitty # Terminal emulator
+    onlyoffice-desktopeditors # office
+    signal-desktop
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

@@ -1,7 +1,15 @@
-{ config, pkgs, lib, catppuccin, home-manager, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  catppuccin,
+  home-manager,
+  inputs,
+  ...
+}:
 {
   config = {
-      environment.systemPackages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       nixos-generators
       wget
       curl
@@ -10,6 +18,6 @@
       micro
       neovim
       git
-      ];
+    ];
   };
 }

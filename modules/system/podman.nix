@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   options.modules.system.podman = {
@@ -37,8 +42,13 @@
 
     # 5. User Permissions
     users.users.${config.mainuser} = {
-      extraGroups = [ "podman" ]
-        ++ lib.optionals config.modules.system.podman.nvidia.enable [ "video" "render" ];
+      extraGroups = [
+        "podman"
+      ]
+      ++ lib.optionals config.modules.system.podman.nvidia.enable [
+        "video"
+        "render"
+      ];
       linger = true;
     };
 

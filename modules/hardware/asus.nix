@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.modules.hardware.asus = {
@@ -14,7 +19,7 @@
 
     # 2. System Packages (CLI control for asusd)
     environment.systemPackages = with pkgs; [
-      asusctl             # CLI tool
+      asusctl # CLI tool
       #rog-control-center  # GUI (rogcc)
     ];
   };

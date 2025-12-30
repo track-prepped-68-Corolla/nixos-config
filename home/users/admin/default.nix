@@ -6,13 +6,12 @@
   home.username = "admin";
   home.homeDirectory = "/home/admin";
 
-
   xdg.configFile."distrobox/distrobox.conf".text = ''
 
     # Mount the Nix Store so your host's CLI tools work inside the container
     container_additional_volumes="/nix/store:/nix/store:ro /etc/profiles/per-user:/etc/profiles/per-user:ro"
   '';
-  
+
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -32,30 +31,30 @@
   home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
-     hello
-     micro
-     yazi
-     mangohud
-     vscodium
-     brave                       # Brave browser
-     neovim                      # Neovim text editor
-     kitty                       # Terminal emulator
-     krita                       # Replace GIMP with Krita
-     htop                        # System monitoring
-     lutris                      # Gaming platform
-     fastfetch                   # fastfetch
-     gitFull                     # is git!
-     onlyoffice-desktopeditors   # office
-     github-desktop
-     nixfmt-rfc-style
-     oh-my-posh
-     signal-desktop
-     slack
-     (pkgs.discord.override {
-            withOpenASAR = true;
-            enableAutoscroll = true;
-            withMoonlight = true;
-          })
+    hello
+    micro
+    yazi
+    mangohud
+    vscodium
+    brave # Brave browser
+    neovim # Neovim text editor
+    kitty # Terminal emulator
+    krita # Replace GIMP with Krita
+    htop # System monitoring
+    lutris # Gaming platform
+    fastfetch # fastfetch
+    gitFull # is git!
+    onlyoffice-desktopeditors # office
+    github-desktop
+    nixfmt-rfc-style
+    oh-my-posh
+    signal-desktop
+    slack
+    (pkgs.discord.override {
+      withOpenASAR = true;
+      enableAutoscroll = true;
+      withMoonlight = true;
+    })
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

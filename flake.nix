@@ -40,18 +40,24 @@
 
     # --- Applications ---
     nixvim = {
-        url = "github:nix-community/nixvim";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs =
+    { self, nixpkgs, ... }@inputs:
     let
       # 1. SHARED ARGUMENTS
       # Makes 'inputs' available to all modules
       sharedArgs = {
         inherit inputs;
-        inherit (inputs) catppuccin home-manager jovian-nixos nixos-hardware;
+        inherit (inputs)
+          catppuccin
+          home-manager
+          jovian-nixos
+          nixos-hardware
+          ;
       };
 
       # 2. SHARED MODULES
@@ -105,7 +111,10 @@
 
             # 4. Nix Settings & Caches
             nix.settings = {
-              experimental-features = [ "nix-command" "flakes" ];
+              experimental-features = [
+                "nix-command"
+                "flakes"
+              ];
               substituters = [ "https://cosmic.cachix.org/" ];
               trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
             };
