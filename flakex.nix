@@ -1,6 +1,8 @@
 {
   description = "NixOS Configuration";
 
+  #test comment
+
   inputs = {
     # --- Core ---
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -12,12 +14,6 @@
 
     # --- Hardware & System ---
     nixos-hardware.url = "github:track-prepped-68-Corolla/nixos-hardware";
-
-    # [NEW] CachyOS Kernel (Release Branch = Stable + Cached)
-    # We use the release branch to ensure we get the pre-built binaries
-    nix-cachyos = {
-      url = "github:xddxdd/nix-cachyos-kernel/release";
-    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -53,6 +49,7 @@
     { self, nixpkgs, ... }@inputs:
     let
       # 1. SHARED ARGUMENTS
+      # Makes 'inputs' available to all modules
       sharedArgs = {
         inherit inputs;
         inherit (inputs)
@@ -60,16 +57,16 @@
           home-manager
           jovian-nixos
           nixos-hardware
-          nix-cachyos # Make sure it's available to modules
           ;
       };
 
       # 2. SHARED MODULES
+      # Applied to every host in the fleet
       sharedModules = [
-        # The Hub
+        # The Hub: Imports all your custom modules
         ./modules/default.nix
 
-        # External Modules
+        # External Inputs
         inputs.home-manager.nixosModules.default
         inputs.sops-nix.nixosModules.sops
         inputs.catppuccin.nixosModules.catppuccin
@@ -78,72 +75,61 @@
         inputs.jovian-nixos.nixosModules.default
 
         # --- GLOBAL CONFIGURATION ---
-        # Converted to a function to access 'inputs' for the overlay
-        (
-          { inputs, ... }:
-          {
+        {
+          config = {
+            # 1. System Basics
+            system.stateVersion = "25.05";
+            nixpkgs.config.allowUnfree = true;
 
-            config = {
-              # 1. System Basics
-              system.stateVersion = "25.05";
-              nixpkgs.config.allowUnfree = true;
+            # --- CONNECTIVITY ---
+            networking.networkmanager.enable = true;
 
-              nixpkgs.overlays = [ inputs.nix-cachyos.overlays.pinned ];
-
-              # --- CONNECTIVITY ---
-              networking.networkmanager.enable = true;
-              hardware.bluetooth = {
-                enable = true;
-                powerOnBoot = true;
-              };
-
-              # 2. Localization
-              time.timeZone = "America/New_York";
-              i18n.defaultLocale = "en_US.UTF-8";
-
-              # 3. Bootloader
-              boot.loader = {
-                systemd-boot.enable = false;
-                grub = {
-                  enable = true;
-                  efiSupport = true;
-                  device = "nodev";
-                  useOSProber = true;
-                };
-                efi.canTouchEfiVariables = true;
-              };
-
-              # 4. Nix Settings & Caches
-              nix.settings = {
-                experimental-features = [
-                  "nix-command"
-                  "flakes"
-                ];
-
-                # [NEW] Binary Cache for CachyOS Kernels
-                # Without this, you will compile the kernel for 4+ hours.
-                substituters = [
-                  "https://cosmic.cachix.org/"
-                  "https://attic.xuyh0120.win/lantian" # CachyOS Maintainer Cache
-                ];
-
-                trusted-public-keys = [
-                  "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
-                  "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" # Key for CachyOS
-                ];
-              };
-
-              # 5. Home Manager Integration
-              home-manager.sharedModules = [
-                inputs.plasma-manager.homeModules.plasma-manager
-              ];
+            # Enable Bluetooth & Power it up on boot
+            hardware.bluetooth = {
+              enable = true;
+              powerOnBoot = true;
             };
-          }
-        )
+
+            # 2. Localization (US/NY)
+            time.timeZone = "America/New_York";
+            i18n.defaultLocale = "en_US.UTF-8";
+
+            # 3. Global Bootloader (GRUB for UEFI)
+            # We explicitly disable systemd-boot to avoid conflicts with auto-generated hardware configs
+            boot.loader = {
+              systemd-boot.enable = false;
+
+              grub = {
+                enable = true;
+                efiSupport = true;
+                device = "nodev";
+                useOSProber = true;
+              };
+
+              efi.canTouchEfiVariables = true;
+            };
+
+            # 4. Nix Settings & Caches
+            nix.settings = {
+              experimental-features = [
+                "nix-command"
+                "flakes"
+              ];
+              substituters = [ "https://cosmic.cachix.org/" ];
+              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+            };
+
+            # 5. Home Manager Integration
+            home-manager.sharedModules = [
+              inputs.plasma-manager.homeModules.plasma-manager
+            ];
+          };
+        }
       ];
     in
     {
       nixosConfigurations = {
+
         # --- Host: ROG (ASUS Flow) ---
         rog = nixpkgs.lib.nixosSystem {
           specialArgs = sharedArgs;
@@ -177,6 +163,7 @@
             ./hosts/strix/default.nix
           ];
         };
+
       };
     };
 }
