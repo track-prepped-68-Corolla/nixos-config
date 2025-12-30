@@ -87,7 +87,7 @@ in
     };
 
     environment.shellAliases = {
-      test = "sys-test";
+      try = "sys-test";
       up = "sys-update";
       down = "sys-down";
       cl = "nh clean all";
