@@ -1,6 +1,8 @@
 {
   description = "NixOS Configuration";
 
+#test comment
+
   inputs = {
     # --- Core ---
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
