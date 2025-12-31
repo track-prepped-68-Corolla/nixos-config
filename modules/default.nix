@@ -36,6 +36,6 @@
     # Containers
     ./containers/ai.nix
     ./containers/distrobox.nix
-    #./containers/mgmt-box.nix
+    ./containers/dozzle.nix
   ];
 }
