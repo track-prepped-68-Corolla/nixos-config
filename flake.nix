@@ -28,7 +28,7 @@
     jovian-nixos.url = "github:jovian-experiments/jovian-nixos";
 
     # --- Desktop & Theming ---
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    #    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
 
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
@@ -60,7 +60,7 @@
           home-manager
           jovian-nixos
           nixos-hardware
-          nix-cachyos # Make sure it's available to modules
+          nix-cachyos
           ;
       };
 
@@ -74,7 +74,7 @@
         inputs.sops-nix.nixosModules.sops
         inputs.catppuccin.nixosModules.catppuccin
         inputs.stylix.nixosModules.stylix
-        inputs.nixos-cosmic.nixosModules.default
+        #inputs.nixos-cosmic.nixosModules.default
         inputs.jovian-nixos.nixosModules.default
 
         # --- GLOBAL CONFIGURATION ---

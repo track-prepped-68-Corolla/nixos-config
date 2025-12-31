@@ -14,8 +14,9 @@
   superUsers = [ "joe" ];
 
   # --- Modules ---
-  modules.desktops.plasma.enable = true;
-  modules.services.sddm.enable = true;
+  #modules.desktops.plasma.enable = true;
+  #modules.services.sddm.enable = true;
+  modules.desktops.cosmic.enable = true;
 
   # HARDWARE: Switched to AMD for Strix Halo 395
   modules.hardware.amd.enable = true;
