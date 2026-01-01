@@ -43,10 +43,10 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     # --- Applications ---
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    #nixvim = {
+    # url = "github:nix-community/nixvim";
+    # inputs.nixpkgs.follows = "nixpkgs";
+    #};
   };
 
   outputs =

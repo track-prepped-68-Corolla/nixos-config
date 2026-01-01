@@ -35,6 +35,7 @@ in
         "/var/lib/dozzle-fix/engine-id:/var/lib/docker/engine-id:ro"
       ];
       environment = {
+        DOZZLE_ENABLE_ACTIONS = "true";
         DOZZLE_ENABLE_SHELL = "true";
         # "status=running" hides stopped containers to reduce clutter
         DOZZLE_FILTER = "status=running";

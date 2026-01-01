@@ -9,7 +9,7 @@
   # --- Imports ---
   imports = [
     # Import our custom Nixvim module
-    ../../home-modules/nixvim/default.nix
+    #../../home-modules/nixvim/default.nix
   ];
 
   # --- User Information ---
@@ -39,13 +39,14 @@
 
   # --- Environment Variables ---
   home.sessionVariables = {
-    # EDITOR = "nvim"; # Nixvim sets defaultEditor = true, so this isn't strictly needed
+    EDITOR = "nvim";
   };
 
   # --- Packages ---
   home.packages = with pkgs; [
 
     # SYSTEM / CLI TOOLS
+    nvim
     fastfetch
     htop
     micro
