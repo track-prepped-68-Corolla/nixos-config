@@ -18,6 +18,10 @@
       htop
       micro
       neovim
+      lazygit
+      ripgrep
+      fd
+      fzf
       git
     ];
   };
