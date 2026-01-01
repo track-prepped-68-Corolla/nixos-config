@@ -10,6 +10,7 @@
   imports = [
     # Import our custom Nixvim module
     #../../home-modules/nixvim/default.nix
+    inputs.sops-nix.homeManagerModules.sops
   ];
 
   # --- User Information ---
@@ -29,6 +30,16 @@
   targets.genericLinux.enable = true;
 
   xdg.enable = true;
+
+  # 2. Your configuration block
+  sops = {
+    age.keyFile = "/home/joe/.config/sops/age/keys.txt";
+    defaultSopsFile = ../../../secrets.yaml; # Verify this path relative to this .nix file!
+    defaultSopsFormat = "yaml";
+
+    secrets = {
+    };
+  };
 
   # --- Configuration Files ---
   # Distrobox configuration
