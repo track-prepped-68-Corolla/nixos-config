@@ -11,6 +11,7 @@
   config = {
     environment.systemPackages = with pkgs; [
       nixos-generators
+      sops
       wget
       curl
       unzip
