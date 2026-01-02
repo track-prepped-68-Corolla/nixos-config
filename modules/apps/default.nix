@@ -23,6 +23,14 @@
       fd
       fzf
       git
+      tmux
+      eza
+      bat
+      zoxide
+      btop
+      duf
+      tldr
+      perl
     ];
   };
 }
