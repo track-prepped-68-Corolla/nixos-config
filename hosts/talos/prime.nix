@@ -15,7 +15,7 @@
   };
 
   # Load the nvidia driver
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
   hardware.nvidia = {
     # Use the NVidia open source kernel module
@@ -34,7 +34,11 @@
         enableOffloadCmd = true;
       };
 
-      # Converted Decimal Bus IDs for your hardware
+     powerManagement = {
+      enable = false;
+      finegrained = false;
+     };
+
       # AMD: 23:00.0 -> 35:0:0
       # NVIDIA: 2d:00.0 -> 45:0:0
       amdgpuBusId = "PCI:35:0:0";
